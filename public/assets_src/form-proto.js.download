@@ -1,0 +1,497 @@
+﻿( function () {
+	var parseJson = function ( text, reviver ) { return ( window.JSON2 || JSON ).parse( text, reviver ) };
+
+	if ( !Element.prototype.getValue ) {
+		// Returns a valid form value.
+		Element.prototype.getValue = function () {
+			var elements, value,
+				type = this.getAttribute( 'type' );
+			if ( type === 'checkbox' || type === 'radio' ) {
+				// Checkbox / radio button must be checked to return it's value.
+				return this.checked ? this.value : null;
+			} else if ( this.value !== undefined && !this.matches( "li" ) ) {
+				// Return the value directly.
+				// Note that the HTMLLIElement has a native 'value' property.
+				return this.value;
+			} else {
+				// Checkbox list or radio button list.
+				elements = this.querySelectorAll( "input[type='checkbox'],input[type='radio']" );
+
+				if ( elements.length === 0 ) {
+					// Not a checkbox list.
+					return undefined;
+				}
+
+				value = [];
+				for ( var i = 0; i < elements.length; i++ ) {
+					if ( elements[i].checked ) {
+						value.push( elements[i].value );
+					}
+				}
+				// Combine the values.
+				return value.join( ',' );
+			}
+		};
+	}
+
+	if ( !Element.prototype.setValue ) {
+		// Sets the value of an input element.
+		Element.prototype.setValue = function ( value ) {
+			var fmt, date, elements, array, el, val, checked,
+				type = this.getAttribute( 'type' );
+
+			switch ( type ) {
+				case 'checkbox':
+				case 'radio':
+					// Checkbox / radio button translates value to checked.
+					this.checked = !!value;
+					return;
+				case 'date':
+					fmt = 'yyyy-MM-dd';
+					break;
+				case 'time':
+					fmt = 'HH:mm';
+					break;
+				case 'datetime':
+					fmt = 'o';
+					break;
+				case 'datetime-local':
+					fmt = 'yyyy-MM-dd\\THH:mm';
+					break;
+			}
+
+			if ( fmt ) {
+				// Set the value as a compatible date value.
+				date = Date.parse2( value );
+				this.value = date ? date.formatted( fmt ) : ( value || "" );
+				if ( this.getAttribute( 'data-timezone' ) ) {
+					this.setAttribute( 'data-datetime', date ? date.toISOString() : "" );
+				}
+			} else if ( this.value !== undefined && !this.matches( "li" ) ) {
+				// Set the supplied value directly.
+				// Note that the HTMLLIElement has a native 'value' property.
+				if ( value === null ) {
+					this.value = "";
+				} else {
+					this.value = value;
+				}
+			} else {
+				// Checkbox list or radio button list.
+				elements = this.querySelectorAll( "input[type='checkbox'],input[type='radio']" );
+				if ( !elements.length ) {
+					return;
+				} else if ( Array.isArray( value ) ) {
+					array = value;
+				} else if ( typeof value === 'string' ) {
+					array = value.split( ',' );
+				} else {
+					array = [value];
+				}
+				for ( var i = 0; i < elements.length; i++ ) {
+					el = elements[i];
+					val = el.value;
+					checked = false;
+					for ( var j = 0; j < array.length; j++ ) {
+						if ( val == array[j] ) {
+							checked = true;
+							break;
+						}
+					}
+					el.checked = checked;
+				}
+			}
+		};
+	}
+
+	if ( !ValidityState.prototype.getType ) {
+		// Get the validation type.
+		ValidityState.prototype.getType = function () {
+			if ( this.valid ) {
+				return 'valid';
+			} else if ( this.valueMissing ) {
+				return 'valueMissing';
+			} else {
+				for ( var p in this ) {
+					if ( this[p] === true ) {
+						return p;
+					}
+				}
+			}
+		};
+	}
+
+	if ( !HTMLInputElement.prototype.getLabel ) {
+		// Get the matching text value of an input element.
+		HTMLInputElement.prototype.getLabel = function () {
+			var labels, form, label,
+				name = this.getAttribute( 'data-label' );
+
+			// Or get the name off of the matching label.
+			if ( !name ) {
+				labels = this.labels;
+				if ( !labels || !labels.length ) {
+					form = this.closest( 'form' ) || this.ownerDocument;
+					labels = form.querySelectorAll( "label[for='" + this.getAttribute( 'id' ) + "']" );
+				}
+				for ( var j = 0; j < labels.length; j++ ) {
+					name = ( labels[j].textContent || "" ).trim();
+					if ( name ) {
+						break;
+					}
+				}
+			}
+
+			return name;
+		};
+	}
+
+	/**
+	 * Find any checkbox lists in a form that have data-required attributes.
+	 * 
+	 * @param {any} form
+	 */
+	function getCheckboxLists( form ) {
+		// Look for any checkboxes with a 'data-required' attribute.
+		var names = {};
+		var inputs = form.querySelectorAll( "input[type='checkbox'][data-required]" );
+
+		// Get the unique sets of checkboxes by name.
+		for ( var i = 0; i < inputs.length; i++ ) {
+			var name = inputs[i].getAttribute( 'name' );
+			names[name] = 1;
+		}
+
+		var lists = [];
+
+		// Get the checkbox list contents.
+		var keys = Object.keys( names );
+		for ( var i = 0; i < keys.length; i++ ) {
+			var name = keys[i];
+			var inputs = form.querySelectorAll( "input[type='checkbox'][data-required][name='" + name + "']" );
+
+			// Are any of the inputs checked?
+			var checked = false;
+			for ( var j = 0; j < inputs.length; j++ ) {
+				if ( inputs[j].checked ) {
+					checked = true;
+					break;
+				}
+			}
+
+			lists.push( {
+				name: name,
+				inputs: inputs,
+				checked: checked
+			} );
+		}
+
+		return lists;
+	}
+
+	// When checking validity on the form element, update the ValidityState of each input element.
+	if ( !HTMLFormElement.prototype._checkValidity ) {
+		HTMLFormElement.prototype._checkValidity = HTMLFormElement.prototype.checkValidity;
+		HTMLFormElement.prototype.checkValidity = function ( state ) {
+			// Required checkbox list need some help.
+			var lists = getCheckboxLists( this );
+			for ( var i = 0; i < lists.length; i++ ) {
+				var list = lists[i];
+				for ( var j = 0; j < list.inputs.length; j++ ) {
+					var input = list.inputs[j];
+					if ( input.checked || !list.checked ) {
+						// If nothing is checked, or this one is, set it as required.
+						input.required = true;
+						input.setAttribute( 'required', 'required' );
+					} else {
+						// Otherwise we don't need this to be required.
+						input.required = false;
+						input.removeAttribute( 'required' );
+					}
+				}
+			}
+
+			var inputs = this.querySelectorAll( 'input,select,textarea' );
+			var valid = true;
+			if ( state ) {
+				state.inputs = inputs;
+			}
+			for ( var i = 0; i < inputs.length; i++ ) {
+				if ( !inputs[i].checkValidity() ) {
+					if ( state && !state.first ) {
+						state.first = inputs[i];
+					}
+					valid = false;
+				}
+			}
+			// Run the native method, just in case.
+			if ( this._checkValidity ) {
+				this._checkValidity.apply( this, arguments );
+			}
+			// Return the result.
+			return valid;
+		};
+	}
+
+	// When checking validity on the form element, update the ValidityState of each input element.
+	if ( !HTMLFormElement.prototype._reportValidity ) {
+		HTMLFormElement.prototype._reportValidity = HTMLFormElement.prototype.reportValidity;
+		HTMLFormElement.prototype.reportValidity = function () {
+			// Run the overridden checkValidity method.
+			var state = {};
+			var result = this.checkValidity( state );
+			if ( result ) {
+				// Everything is valid.
+				return result;
+			}
+
+			// If an invalid element was triggered inside a hidden tab, activate it.
+			if ( state && state.first && window.USC && window.USC.setTabs ) {
+				var panel = state.first.closest( '.ui-tab-panel[data-tab]' );
+				var name = panel && panel.getAttribute( 'data-tab' );
+				var scope = name && panel.parentElement.closest( '.ui-tabs' );
+				if ( scope && !panel.offsetHeight ) {
+					USC.setTabs( scope, name );
+				}
+			}
+
+			// If an invalid element was triggered inside a tabbable, activate it.
+			if ( state && state.first && window.USC && window.USC.setTabbableActive ) {
+				USC.setTabbableActive( state.first );
+			}
+
+			if ( this._reportValidity ) {
+				// Real browsers have a native method (which will trigger the alert message).
+				this._reportValidity.apply( this, arguments );
+			}
+
+			// A non-native validation message needs to be manually focused.
+			if ( state && state.first ) {
+				// What type of validity failure?
+				var type = state.first.validity.getType();
+				// Get the parent container.
+				var parent = state.first.closest( "[data-validity]" ) || state.first.closest( "li" );
+				// Check for a custom validation message.
+				var validator = parent && parent.querySelector( "[data-validity='" + type + "'],[data-type='" + type + "']" );
+				if ( validator ) {
+					// Focus on it.
+					try { state.first.focus(); }
+					catch ( ex ) { ; }
+				}
+			}
+
+			return result;
+		};
+	}
+
+	// Reset the custom validity classes and attributes.
+	if ( !HTMLFormElement.prototype._reset ) {
+		HTMLFormElement.prototype._reset = HTMLFormElement.prototype.reset;
+		HTMLFormElement.prototype.reset = function () {
+			var elements = this.querySelectorAll( ".invalid,.valid,li[data-validity]" );
+			for ( var i = 0; i < elements.length; i++ ) {
+				var el = elements[i];
+				el.classList.remove( 'invalid' );
+				el.classList.remove( 'valid' );
+				if ( el.getAttribute( 'data-validity' ) ) {
+					el.setAttribute( 'data-validity', '' );
+				}
+			}
+			// Run the base reset.
+			if ( this._reset ) {
+				this._reset();
+			}
+		};
+	}
+
+	// IE polyfill to fix the missing "submitter" property from a form submit event.
+	var SUBMIT_BUTTONS = "button,input[type='submit'],input[type='button'],input[type='image']";
+	if ( typeof SubmitEvent === 'undefined' ) {
+		var lastBtn = null
+		// On capture, not the last clicked button.
+		document.addEventListener( 'click', function ( e ) {
+			if ( !e.target.closest ) return;
+			lastBtn = e.target.closest( SUBMIT_BUTTONS );
+		}, true );
+		// On, capture, fix the submitter property before propagation.
+		document.addEventListener( 'submit', function ( e ) {
+			if ( e.submitter ) return;
+			var candidates = [document.activeElement, lastBtn];
+			for ( var i = 0; i < candidates.length; i++ ) {
+				var candidate = candidates[i];
+				if ( !candidate ) continue;
+				if ( !candidate.form ) continue;
+				if ( !candidate.matches( SUBMIT_BUTTONS ) ) continue;
+				e.submitter = candidate;
+				return;
+			}
+			// Select the first button element in the form by default.
+			e.submitter = e.target.querySelector( SUBMIT_BUTTONS )
+		}, true );
+	}
+
+	// IE/Safari polyfill to fix the missing "requestSubmit" method.
+	if ( !HTMLFormElement.prototype.requestSubmit ) {
+		if ( typeof HTMLFormElement.prototype.requestSubmit == "function" ) return;
+
+		HTMLFormElement.prototype.requestSubmit = function ( submitter ) {
+			if ( submitter ) {
+				validateSubmitter( submitter, this );
+				submitter.click();
+			} else {
+				submitter = document.createElement( "input" );
+				submitter.type = "submit";
+				submitter.hidden = true;
+				this.appendChild( submitter );
+				submitter.click();
+				this.removeChild( submitter );
+			}
+		};
+
+		function validateSubmitter( submitter, form ) {
+			submitter instanceof HTMLElement || raise( TypeError, "parameter 1 is not of type 'HTMLElement'" );
+			submitter.type == "submit" || raise( TypeError, "The specified element is not a submit button" );
+			submitter.form == form || raise( DOMException, "The specified element is not owned by this form element", "NotFoundError" );
+		}
+
+		function raise( errorConstructor, message, name ) {
+			throw new errorConstructor( "Failed to execute 'requestSubmit' on 'HTMLFormElement': " + message + ".", name );
+		}
+	}
+
+	var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/;
+
+	/**
+	 * Try to parse a string value as boolean, null, number, object literal or array.
+	 *
+	 * @param {string} str
+	 * @returns {any}
+	 */
+	function cast( str ) {
+		var num;
+		if ( str === 'true' ) {
+			return true;
+		} else if ( str === 'false' ) {
+			return false;
+		} else if ( str === 'null' ) {
+			return null;
+		} else if ( !isNaN( num = +( str ) ) && str === String( num ) ) {
+			return num;
+		} else if ( rbrace.test( str ) ) {
+			try {
+				return parseJson( str );
+			}
+			catch ( ex ) { ; }
+		}
+		return str;
+	}
+
+	/**
+	 * Compare to stringified values to their equivalents.
+	 * 
+	 * @param {string} value
+	 * @param {string} compare
+	 */
+	function isMatch( value, compare ) {
+		var match = false;
+
+		// Try and cast the compare value to a specific type.
+		compare = cast( compare );
+
+		if ( compare === '*' ) {
+			// Any value at all is a match.
+			match = !!value;
+		} else if ( typeof compare === 'boolean' ) {
+			// Compare as a bool
+			if ( !value ) {
+				value = false;
+			} else if ( typeof value !== 'boolean' ) {
+				switch ( ( "" + value ).toUpperCase() ) {
+					case "1":
+					case "YES":
+					case "ON":
+					case "TRUE":
+					case "SUCCESS":
+						value = true;
+						break;
+					default:
+						value = false;
+						break;
+				}
+			}
+			match = ( compare === value );
+		} else if ( typeof compare === 'number' ) {
+			// Compare as an int.
+			match = ( compare === +( value ) );
+		} else if ( !compare ) {
+			// If the compare is empty, then a match is when the "value" is also empty.
+			match = !value;
+		} else if ( Array.isArray( compare ) ) {
+			// Check the elements the array.
+			for ( var i = 0; i < compare.length; i++ ) {
+				if ( compare[i] == value ) {
+					// Any soft match is good.
+					match = true;
+					break;
+				}
+			}
+		} else {
+			// Soft match.
+			match = ( compare == value );
+		}
+		return match;
+	}
+
+	// Override the checkValidity method of form elements to support data-conditional and data-compare.
+	var _proto = [HTMLInputElement.prototype, HTMLSelectElement.prototype, HTMLTextAreaElement.prototype];
+	for ( var i = 0; i < _proto.length; i++ ) {
+		if ( !_proto[i]._checkValidity ) {
+			_proto[i]._checkValidity = _proto[i].checkValidity;
+			_proto[i].checkValidity = function () {
+				// Conditional validation changes the required / optional state.
+				var conditional = this.getAttribute( 'data-conditional' );
+				if ( conditional ) {
+					// Look for the element by id.
+					try { conditional = this.ownerDocument.getElementById( conditional ); }
+					catch ( ex ) { conditional = null; }
+					if ( conditional ) {
+						// Compare the values and set the required attribute.
+						var value = conditional.getValue();
+						var yesValue = this.getAttribute( 'data-conditional-value' );
+						var notValue = this.getAttribute( 'data-conditional-not-value' );
+
+						if ( yesValue !== null && isMatch( value, yesValue ) ) {
+							this.setAttribute( 'required', 'required' );
+							this.required = true;
+						} else if ( notValue !== null && !isMatch( value, notValue ) ) {
+							this.setAttribute( 'required', 'required' );
+							this.required = true;
+						} else {
+							this.removeAttribute( 'required' );
+							this.required = false;
+						}
+					}
+				}
+
+				if ( !this.validity.valueMissing ) {
+					// Check for a compare validator.
+					var compare = this.getAttribute( 'data-compare' );
+					try { compare = this.ownerDocument.getElementById( compare ); }
+					catch ( ex ) { compare = null; }
+					if ( compare ) {
+						// Set or remove a custom compareMismatch state.
+						if ( this.value != compare.value ) {
+							this.setCustomValidity( "Value doesn't match." );
+						}
+					}
+				}
+
+				// Check the standard HTML5 validation.
+				return this._checkValidity.apply( this, arguments );
+			};
+		}
+	}
+
+	if ( window.register ) {
+		window.register( "usc/p/form-proto" );
+	}
+} )();

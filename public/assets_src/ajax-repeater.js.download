@@ -1,0 +1,937 @@
+if ( !window.USC ) { window.USC = {}; }
+require2( ['usc/p/utils', 'usc/p/http', 'usc/p/visible', 'usc/p/dialog'], function () {
+
+	var defaultOptions = {
+		// Replace selected contents instead of the entire control.
+		ajaxreplace: false,
+		// When scrolling to the bottom of the list, fetch the next set of results.
+		infinite: false,
+		// How many new results to add on a 'More'
+		increment: 10,
+		// Look for search control is another element.
+		getsearch: null,
+		// The time delay before submitting a search.
+		searchDelay: 250
+	};
+
+	var SUBMIT_BUTTONS = "button,input[type='submit'],input[type='button'],input[type='image']";
+
+	/**
+	 * Create the AjaxRepeater control.
+	 *
+	 * @param {HTMLElement} el
+	 */
+	function AjaxRepeater( el ) {
+		this.element = el;
+
+		this.els = {
+			form: el.closest( 'form' ),
+			search: {}
+		};
+		if ( !this.els.form ) {
+			throw new Error( 'The AjaxRepeater does not live in a form element.' );
+		}
+
+		this.state = {
+			// A collection of remote search elements.
+			search: {},
+			// A json representation of the last search collection.
+			last: null,
+			// The last search request posted to the API.
+			lastSearch: null,
+			// setTimeout value of the last scroll event.
+			scroll: 0
+		};
+
+		// Set the options.
+		this.options = Object.extend( {}, defaultOptions, USC.elementData( el ) );
+
+		// Bind these methods to keep the 'this' context.
+		this.forwardSearch = handleForwardSearch.bind( this );
+		this.search = handleSearch.bind( this );
+		this.error = handleError.bind( this );
+		this.scroll = handleScroll.bind( this );
+		this.infinite = handleInfinite.bind( this );
+
+		// Cancel the default form submit event.
+		this.els.form.addEventListener( 'submit', handleSubmit.bind( this ) );
+
+		// Init when the repeater can be seen.
+		this.init = handleInit.bind( this );
+		USC.onVisible( this.element, 0, this.init );
+	}
+
+	/**
+	 * Set up the events and start the repeater.
+	 */
+	function handleInit() {
+		this.element.trigger( 'ajaxifybeforeinit' );
+		// Wire up the events.
+		this.element.addEventListener( 'click', handleClick.bind( this ) );
+		this.element.addEventListener( 'input', handleInput.bind( this ) );
+		this.element.addEventListener( 'change', handleInput.bind( this ) );
+
+		// If there is a remote search widget, wire up the events.
+		if ( this.options.getsearch ) {
+			if ( typeof this.options.getsearch === 'string' ) {
+				this.getSearch( this.options.getsearch );
+			} else if ( Array.isArray( this.options.getsearch ) ) {
+				for ( var i = 0; i < this.options.getsearch.length; i++ ) {
+					this.getSearch( this.options.getsearch[i] );
+				}
+			}
+		}
+
+		// Note if this is a deferred ajax repeater.
+		var deferred = this.element.classList.contains( 'ui-deferred' );
+
+		// Infinite loading on scroll.
+		if ( this.options.infinite ) {
+			window.addEventListener( 'scroll', this.scroll );
+			if ( !deferred ) {
+				// Check if we need to run it at the start
+				this.infinite();
+			}
+		}
+
+		// If this was a deferred list, submit straight out the gate.
+		if ( deferred ) {
+			this.element.classList.remove( 'ui-deferred' );
+			this.search();
+		}
+		this.element.trigger( 'ajaxifyinit' );
+	}
+
+	/**
+	 * Find a remote widget and listen for changes.
+	 *
+	 * @param {string} id
+	 */
+	AjaxRepeater.prototype.getSearch = function ( id ) {
+		var remote = document.getElementById( id );
+		if ( !remote ) {
+			console.error( "Could not find control with an id of '" + id + "' to run getSearch" );
+			return;
+		}
+		var form = remote.closest( 'form' );
+		if ( !form ) {
+			console.error( "The remote search control needs to live inside a form." );
+			return;
+		} else if ( form === this.els.form ) {
+			console.error( "The remote search control is inside the same form as the AjaxRepeater." );
+			return;
+		}
+		this.els.search[id] = remote;
+		remote.addEventListener( 'input', this.forwardSearch );
+		remote.addEventListener( 'change', this.forwardSearch );
+		remote.addEventListener( 'click', handleClick.bind( this ) );
+	}
+
+	/**
+	 * Submit the contents of the ajax repeater form and handle the response.
+	 * 
+	 * @param {Function} callback
+	 * @returns {XMLHttpRequest}
+	 */
+	AjaxRepeater.prototype.submit = function ( callback ) {
+		// Cancel any incomplete search request.
+		if ( this.state.lastSearch ) {
+			this.state.lastSearch.abort();
+			this.state.lastSearch = null;
+		}
+
+		// Post the result.
+		var url = this.els.form.getAttribute( 'action' );
+		var payload = new FormData( this.els.form );
+		var command = this.command();
+		var that = this;
+		if ( !callback ) {
+			callback = function ( response ) {
+				handleResponse.call( that, response, command );
+			};
+		}
+		return USC.post( url, payload, callback, this.error );
+	};
+
+	/**
+	 * Start or stop a modal loading on the AjaxRepeater.
+	 *
+	 * @param {boolean} done
+	 */
+	AjaxRepeater.prototype.loading = function ( start ) {
+		if ( start ) {
+			this.element.classList.add( 'loading' );
+			for ( var p in this.els.search ) {
+				var el = this.els.search[p];
+				if ( el && el.classList ) {
+					el.classList.add( 'loading' );
+				}
+			}
+		} else {
+			this.element.classList.remove( 'loading' );
+			for ( var p in this.els.search ) {
+				var el = this.els.search[p];
+				if ( el && el.classList ) {
+					el.classList.remove( 'loading' );
+				}
+			}
+		}
+	};
+
+	/**
+	 * Navigate the paging.
+	 *
+	 * @param {number} dir
+	 */
+	AjaxRepeater.prototype.navigate = function ( dir, relative ) {
+		if ( relative === undefined ) {
+			relative = true;
+		}
+		var inputs = this.setSearchAmount( 'PagingID', dir, relative );
+		if ( inputs.length ) {
+			// Reset any edit parameter.
+			this.editid( '' );
+			// Trigger the change to update the grid.
+			inputs[0].trigger( 'change' );
+		} else {
+			console.warn( "Missing PagingID control, cannot navigate." );
+		}
+	};
+
+	/**
+	 * Add more results.
+	 *
+	 * @param {number} amount
+	 */
+	AjaxRepeater.prototype.more = function ( amount ) {
+		// An ajaxreplace will add the new nodes to the bottom.
+		if ( this.options.ajaxreplace ) {
+			this.command( 'More' );
+			this.navigate( 1, true );
+			return;
+		}
+
+		var inputs = this.setSearchAmount( 'ResultsPerPage', amount || this.options.increment || 10, true );
+		if ( inputs.length ) {
+			// Reset any edit parameter.
+			this.editid( '' );
+			// Trigger the change to update the grid.
+			inputs[0].trigger( 'change' );
+		} else {
+			console.warn( "Missing ResultsPerPage control, cannot add more." );
+		}
+	};
+
+	AjaxRepeater.prototype.add = function ( item ) {
+		// Set the edit value and command.
+		this.editid( -1 );
+		this.command( 'Edit' );
+
+		// Set the return spot for ADA.
+		this.options.popup.returnTo = item;
+
+		// Open the popup now, in a loading state.
+		var dialog = USC.dialog( '<aside class="ui-loading"></aside>', this.options.popup );
+
+		// Submit and process the results.
+		var that = this;
+		var callback = function ( response ) {
+			handleEdit.call( that, response, dialog );
+		};
+		this.submit( callback );
+	};
+
+	/**
+	 * Edit off of an item.
+	 *
+	 * @param {any} item
+	 */
+	AjaxRepeater.prototype.edit = function ( item ) {
+		if ( !this.options.popup ) {
+			throw new Error( "Missing data-popup properties." );
+		}
+
+		// Get the ID to edit.
+		var id;
+		if ( !item ) {
+			console.warn( "No item provided, cannot edit." );
+			return;
+		} else if ( typeof item === 'number' ) {
+			id = item;
+		} else if ( item.closest ) {
+			var parent = item.closest( "[data-key]" );
+			if ( !parent ) {
+				console.warn( "Need a data-key attribute to edit." );
+				return;
+			}
+			id = +parent.getAttribute( 'data-key' );
+		}
+
+		// Set the edit value and command.
+		this.editid( id );
+		this.command( 'Edit' );
+
+		// Set the return spot for ADA.
+		this.options.popup.returnTo = item;
+
+		// Open the popup now, in a loading state.
+		var dialog = USC.dialog( '<aside class="ui-loading"></aside>', this.options.popup );
+
+
+		// Submit and process the results.
+		var that = this;
+		var callback = function ( response ) {
+			handleEdit.call( that, response, dialog );
+			if ( window.USE ) {
+				window.USE.Replace();
+			}
+		};
+		this.submit( callback );
+	};
+
+	/**
+	 * Get or set the repeater edit id.
+	 *
+	 * @param {string} value
+	 */
+	AjaxRepeater.prototype.editid = function ( value ) {
+		var input = this.els.form.querySelector( "#" + this.element.getAttribute( 'id' ) + "__edit_" );
+		if ( !input ) {
+			throw new Error( "Couldn't find edit input." );
+		} else if ( value === undefined ) {
+			return input.value;
+		} else {
+			input.value = value;
+		}
+	};
+
+	/**
+	 * Get or set the repeater command.
+	 *
+	 * @param {string} name
+	 */
+	AjaxRepeater.prototype.command = function ( name ) {
+		var input = this.els.form.querySelector( "#" + this.element.getAttribute( 'id' ) + "__command_" );
+		if ( !input ) {
+			throw new Error( "Couldn't find command input." );
+		} else if ( name === undefined ) {
+			return input.value;
+		} else {
+			input.value = name;
+		}
+	};
+
+	AjaxRepeater.prototype.datasource = function ( name ) {
+		var input = this.els.form.querySelector( "#" + this.element.getAttribute( 'id' ) + "__datasource_" );
+		if ( !input ) {
+			return;
+		} else if ( name === undefined ) {
+			return input.value;
+		} else {
+			input.value = name;
+		}
+	};
+
+	/**
+	 * Find a search input by a specific value and increment / decrement the value.
+	 *
+	 * @param {string} name
+	 * @param {number} amount
+	 * @param {boolean} relative
+	 */
+	AjaxRepeater.prototype.setSearchAmount = function ( name, amount, relative ) {
+		if ( !amount ) {
+			return;
+		}
+		var inputs = this.element.querySelectorAll( "input[name$='$" + name + "'][data-search]" );
+		for ( var i = 0; i < inputs.length; i++ ) {
+			setSearchValue( inputs[i], amount, relative );
+		}
+		return inputs;
+	};
+
+	/**
+	 * Find a search input by a specific value and increment / decrement the value.
+	 *
+	 * @param {string} name
+	 * @param {number} amount
+	 * @param {boolean} relative
+	 */
+	AjaxRepeater.prototype.addEmptyRows = function ( amount, relative ) {
+		if ( !amount ) {
+			return;
+		}
+		this.setSearchAmount( 'AddEmptyRows', amount, relative );
+		this.command( 'AddEmptyRows' );
+		this.search();
+	};
+
+	/**
+	 * Set a search value, ensuring min/max are followed.
+	 * 
+	 * @param {HTMLInputElement} input
+	 * @param {number} amount
+	 * @param {boolean} relative
+	 */
+	function setSearchValue( input, amount, relative ) {
+		var value;
+		if ( relative ) {
+			value = ( +input.value || 1 ) + amount;
+		} else {
+			value = amount;
+		}
+		var min = +input.getAttribute( 'min' ) || 1;
+		var max = +input.getAttribute( 'max' );
+		if ( !relative && amount === -1 ) {
+			value = max;
+		} else if ( value < min ) {
+			value = min;
+		} else if ( max && value > max ) {
+			value = max;
+		}
+		input.value = value;
+
+		// Make sure the value was set.
+		if ( value != +input.value ) {
+			throw new Error( "Invalid value: " + value + " for " + input.getAttribute( 'name' ) );
+		}
+	}
+
+	/**
+	 * Reset any search values and re-search.
+	 */
+	AjaxRepeater.prototype.reset = function () {
+		// Reset the current form inputs.
+		var inputs = this.element.querySelectorAll( "[data-search][name]" );
+		resetFormValues( inputs );
+
+		// Reset any remote search inputs.
+		for ( var p in this.els.search ) {
+			var el = this.els.search[p];
+			if ( el && el.querySelectorAll ) {
+				inputs = el.querySelectorAll( "[data-search][name]" );
+				resetFormValues( inputs );
+			}
+		}
+
+		// Re-search.
+		this.state.last = null;
+		this.search();
+	};
+
+	/**
+	 * Reset the values of search elements.
+	 * 
+	 * @param {HTMLElement[]} inputs
+	 */
+	function resetFormValues( inputs ) {
+		for ( var i = 0; i < inputs.length; i++ ) {
+			var input = inputs[i];
+			var name = ( input.getAttribute( 'name' ) || "" ).split( '$' ).pop().toLowerCase();
+			switch ( name ) {
+				case 'pagingid':
+					input.setValue( "1" );
+					continue;
+				case 'resultsperpage':
+				case 'orderby':
+					continue;
+			}
+			if ( input.matches( "[type='radio'],[type='checkbox']" ) ) {
+				input.checked = false;
+			} else {
+				input.setValue( "" );
+			}
+		}
+	}
+
+	/**
+	 * Update the sort based on the clicked link.
+	 *
+	 * @param {HTMLAnchorElement} link
+	 */
+	AjaxRepeater.prototype.sort = function ( link ) {
+		var input = this.element.querySelector( "input[name$='OrderBy'][data-search]" );
+		if ( !input ) {
+			console.warn( "Missing OrderBy control, cannot sort." );
+			return;
+		}
+		var orderby = link.getAttribute( 'data-orderby' );
+		if ( !orderby ) {
+			console.warn( "Missing data-orderby value, cannot sort." );
+			return;
+		}
+
+		// If this is a ui-sort link, update the state.
+		var desc = false;
+		if ( link.classList.contains( 'ui-sort' ) ) {
+			if ( link.classList.contains( 'active' ) ) {
+				// If the link already was active, toggle asc/desc.
+				link.classList.toggle( 'desc' );
+			} else {
+				// Otherwise, ensure the current link is activated.
+				var els = this.element.querySelectorAll( "a.ui-sort[data-orderby]" );
+				for ( var i = 0; i < els.length; i++ ) {
+					var el = els[i];
+					if ( el === link ) {
+						el.classList.add( 'active' );
+					} else {
+						el.classList.remove( 'active' );
+					}
+				}
+			}
+			// Note if we're doing descending.
+			desc = link.classList.contains( 'desc' );
+		}
+
+		// Reset the paging.
+		this.setSearchAmount( "PagingID", 1 );
+
+		// Set the value.
+		if ( desc ) {
+			orderby += " DESC";
+		}
+		input.setValue( orderby );
+		input.trigger( 'change' );
+	}
+
+	/**
+	 * Do an ajax submit instead of a default one.
+	 *
+	 * @param {Event} e
+	 */
+	function handleSubmit( e ) {
+		if ( e.submitter && e.submitter.matches( SUBMIT_BUTTONS ) ) {
+			return;
+		}
+		e.preventDefault();
+		e.stopPropagation();
+		e.stopImmediatePropagation();
+		this.search();
+		return false;
+	}
+
+	/**
+	 * When clicking on the AjaxRepeater.
+	 *
+	 * @param {MouseEvent} e
+	 */
+	function handleClick( e ) {
+		var data = USC.linkData( e );
+		var action = ( data.action || "" ).toLowerCase();
+		switch ( action ) {
+			case 'next':
+				this.navigate( 1, true );
+				break;
+			case 'prev':
+				this.navigate( -1, true );
+				break;
+			case 'start':
+				this.navigate( 1, false );
+				break;
+			case 'end':
+				this.navigate( -1, false );
+				break;
+			case 'more':
+				this.more();
+				break;
+			case 'apply':
+				this.search();
+				break;
+			case 'reset':
+				this.reset();
+				break;
+			case 'sort':
+				this.sort( data.link );
+				break;
+			case 'edit':
+				this.edit( data.link );
+				break;
+			case 'add':
+				this.add( data.link );
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * When the input event is fired.
+	 *
+	 * @param {Event} e
+	 */
+	function handleInput( e ) {
+		var search = e.target.closest( "[data-search]" );
+		if ( !search || search.matches( "form" ) ) {
+			// Don't bother if this isn't a search element.
+			return;
+		}
+
+		var name = ( e.target.getAttribute( 'name' ) || "" ).split( '$' ).pop().toLowerCase();
+		if ( name === 'pagingid' ) {
+			// Ensure the pagingid is a valid value.
+			setSearchValue( e.target, e.target.getValue(), false );
+		} else {
+			// Reset the pagingid any time another search input is changed.
+			this.setSearchAmount( "PagingID", 1 );
+		}
+
+		if ( e.target.closest( "[data-apply]" ) ) {
+			// An apply element won't trigger a search until the apply button is clicked.
+			return;
+		} else if ( e.type === 'input' && e.target.matches( "input[type='text'],input[type='search']" ) ) {
+			// Text elements will get a 1/4 timeout before firing.
+			clearTimeout( this.state.search );
+			this.state.search = setTimeout( this.search, this.options.searchDelay );
+		} else {
+			// Otherwise, search immediately.
+			this.search();
+		}
+	}
+
+	/**
+	 * When a remote search change is made, forward that change to the main AjaxRepeater.
+	 *
+	 * @param {Event} e
+	 */
+	function handleForwardSearch( e ) {
+		var name = e.target.getAttribute( 'name' );
+		if ( !name ) {
+			return;
+		}
+
+		var sharedName = name.split( '$' ).pop();
+		var input = this.els.form.querySelector( "[name$='$" + sharedName + "']" );
+		if ( !input ) {
+			console.warn( "A change was made in the remote search, but a matching input wasn't found in the AjaxRepeater", name );
+			return;
+		}
+
+		var value;
+		if ( e.target.matches( "[type='radio'],[type='checkbox']" ) ) {
+			// If we have a radiobutton list or a checkbox list, get all checked values.
+			var form = e.target.closest( 'form' );
+			var inputs = Array.from( form.querySelectorAll( "[name='" + name + "']:checked" ) );
+			var values = [];
+			for ( var i = 0; i < inputs.length; i++ ) {
+				values.push( inputs[i].value );
+			}
+			value = values.join( "," );
+		} else {
+			// Get the value of the element.
+			value = e.target.getValue();
+		}
+
+		// Set the value and trigger the same event.
+		input.setValue( value );
+		input.trigger( e.type );
+	}
+
+	/**
+	 * Trigger a search if the values haven't changed since the last search.
+	 */
+	function handleSearch() {
+		var payload = new FormData( this.els.form );
+		var obj = {};
+		payload.forEach( function ( value, key ) {
+			obj[key] = value;
+		} );
+		var json = JSON.stringify( obj );
+		if ( json === this.state.last ) {
+			// Didn't change.
+			return;
+		} else {
+			// Note the last state.
+			this.state.last = json;
+			// Start the loading.
+			this.loading( true );
+			// Trigger a search event
+			this.element.trigger( 'ajaxifysearch', this.state );
+			// Submit the ajax form.
+			this.state.lastSearch = this.submit();
+		}
+	}
+
+	/**
+	 * Check for an infinite scroll on a slight timeout.
+	 *
+	 * @param {Event} e
+	 */
+	function handleScroll( e ) {
+		clearTimeout( this.state.scroll );
+		this.state.scroll = setTimeout( this.infinite, 150 );
+	}
+
+	/**
+	 * If the bottom of the element is in the viewport, ask for more.
+	 */
+	function handleInfinite() {
+		// If we've reached the end, there's no more.
+		if ( this.element.getAttribute( 'data-needspaging' ) === 'false' ) {
+			return;
+		}
+
+		var bounds = this.element.getBoundingClientRect();
+		if ( bounds.bottom < window.innerHeight ) {
+			this.more();
+		}
+	}
+
+	/**
+	 * When the server posts the results back.
+	 *
+	 * @param {string} response
+	 * @param {string} command
+	 */
+	function handleResponse( response, command ) {
+		if ( !response || response[0] !== '<' ) {
+			console.error( "Invalid AjaxRepeater response." );
+			return;
+		}
+
+		// Clear the last command.
+		this.command( "" );
+
+		var parser = new DOMParser();
+		var doc = parser.parseFromString( response, 'text/html' );
+		var id = this.element.getAttribute( 'id' );
+		var ctrl = id && doc.getElementById( id );
+		if ( !ctrl ) {
+			console.error( "AjaxRepeater not found in results." );
+			return;
+		} else {
+			// Copy any key properties.
+			copyProperties( this.element, ctrl );
+		}
+
+		this.element.trigger( 'ajaxifybeforerender', {
+			currentHTML: this.element,
+			HTML: ctrl
+		} );
+
+		if ( this.options.ajaxreplace ) {
+			ajaxReplace( this.element, ctrl, command );
+		} else {
+			// Replace the contents of the element with the control.
+			while ( this.element.lastChild ) {
+				this.element.lastChild.remove();
+			}
+			var frag = document.createDocumentFragment();
+			while ( ctrl.firstChild ) {
+				frag.appendChild( ctrl.firstChild );
+			}
+			this.element.appendChild( frag );
+
+			// Widgets is fired if there isn't an ajax replace.
+			this.element.trigger( 'ajaxifywidgets' );
+		}
+
+		// Handle any post processing.
+		if ( window.LazyLoad ) {
+			window.LazyLoad();
+		}
+		if ( window.USE ) {
+			window.USE.Replace();
+		}
+
+		this.element.trigger( 'ajaxifyrender' );
+
+		// Clear any loading.
+		this.loading( false );
+
+		// If this is an infinite scrolling list, check if we need to do another 'More'.
+		if ( this.options.infinite ) {
+			this.scroll();
+		} else if ( command !== 'More' ) {
+			// Scroll back to the top.
+			var first = this.element.querySelector( "[data-item='i']" );
+			if ( first && first.scrollIntoViewport ) {
+				first.scrollIntoViewport( {
+					fixed: !!document.getFixedElements(),
+					margin: ( document.fixedOffset( true ) * 1.5 ) || 200
+				} );
+			}
+		}
+	}
+
+	/**
+	 * When the server posts an edit response back.
+	 * 
+	 * @param {string} response
+	 * @param {Dialog} dialog
+	 */
+	function handleEdit( response, dialog ) {
+		if ( !response || response[0] !== '<' ) {
+			console.error( "Invalid AjaxRepeater response." );
+			return;
+		}
+
+		// Clear the last command.
+		this.command( "" );
+
+		// Parse the HTML and get the control info.
+		var parser = new DOMParser();
+		var doc = parser.parseFromString( response, 'text/html' );
+		var id = this.element.getAttribute( 'id' );
+		var ctrl = id && doc.getElementById( id );
+		var item = ctrl && ctrl.querySelector( "[data-item='e']" );
+		if ( !item ) {
+			console.error( "Unable to find AjaxRepeater edit item." );
+			return;
+		}
+
+		if ( item.matches( 'li,td' ) ) {
+			// An LI or TD cannot be the basis of a popup, get the first child.
+			item = item.firstElementChild;
+		} else if ( item.matches( 'tr' ) ) {
+			// Neither can a TR -- get the first child of the TD.
+			item = item.firstElementChild.firstElementChild;
+		}
+
+		if ( dialog ) {
+			// If we have a dialog already, update the item.
+			dialog.setElement( item );
+		} else {
+			// Create the dialog box with the supplied properties.
+			USC.dialog( item, this.options.popup );
+		}
+
+		// Handle special properties for this edit item. 
+		const video = item.querySelector( 'video' ) || item.matches( 'video' );
+		if ( video )
+			require2( 'usc/p/video', () => window.USC.initVideos() );
+	}
+
+	var keyProperties = ['data-needspaging'];
+
+	/**
+	 * Copy key ajax properties.
+	 *
+	 * @param {HTMLElement} element
+	 * @param {HTMLElement} ctrl
+	 */
+	function copyProperties( element, ctrl ) {
+		for ( var i = 0; i < keyProperties.length; i++ ) {
+			var prop = keyProperties[i];
+			if ( !ctrl.attributes[prop] ) {
+				element.removeAttribute( prop );
+			} else {
+				element.setAttribute( prop, ctrl.getAttribute( prop ) );
+			}
+		}
+	}
+
+	/**
+	 * Replace specific nodes as a part of the re-render.
+	 *
+	 * @param {HTMLElement} element
+	 * @param {HTMLElement} ctrl
+	 * @param {string} command
+	 */
+	function ajaxReplace( element, ctrl, command ) {
+		// Get the placeholder nodes in the current element.
+		var data = getPlaceholderNodes( element );
+		var parent = data[0];
+		var oldNodes = data[1];
+		var before = data[2];
+
+		// Get the placeholder nodes to insert.
+		data = getPlaceholderNodes( ctrl );
+		var newNodes = data[1];
+
+		// Remove the old nodes.
+		if ( command !== 'More' ) {
+			for ( var i = 0; i < oldNodes.length; i++ ) {
+				oldNodes[i].remove();
+			}
+		}
+
+		// Move the new nodes to a fragment.
+		var frag = document.createDocumentFragment();
+		for ( var i = 0; i < newNodes.length; i++ ) {
+			frag.appendChild( newNodes[i] );
+		}
+
+		// Move it into position.
+		if ( before ) {
+			parent.insertBefore( frag, before );
+		} else {
+			parent.appendChild( frag );
+		}
+
+		// Look for additional replace nodes.
+		oldNodes = Array.from( element.querySelectorAll( "[data-ajaxrender='replace']" ) );
+		newNodes = Array.from( ctrl.querySelectorAll( "[data-ajaxrender='replace']" ) );
+
+		if ( oldNodes.length !== newNodes.length ) {
+			console.warn( "Mismatch of ajaxreplace nodes" );
+			return;
+		} else {
+			// Replace the nodes.
+			for ( var i = 0; i < oldNodes.length; i++ ) {
+				parent = oldNodes[i].parentElement;
+				parent.insertBefore( newNodes[i], oldNodes[i] );
+				oldNodes[i].remove();
+			}
+		}
+	}
+
+	/**
+	 * When a server-post fails.
+	 *
+	 * @param {string} response
+	 * @param {Event} event
+	 * @param {number} status
+	 */
+	function handleError( response, event, status ) {
+		this.loading( false );
+	}
+
+	/**
+	 * Find the nodes in-between the placeholder elements.
+	 *
+	 * @param {HTMLElement} el
+	 */
+	function getPlaceholderNodes( el ) {
+		var placeholders = el.querySelectorAll( ".cms-repeater-placeholder" );
+		if ( placeholders.length !== 2 || placeholders[0].parentNode !== placeholders[1].parentNode ) {
+			throw new Error( "Missing or invalid placeholders in the results." );
+		}
+
+		// Fetch all of the nodes in between the starting and ending placeholders.
+		var parent = placeholders[0].parentNode;
+		var nodes = [];
+		var start = Array.prototype.indexOf.call( parent.childNodes, placeholders[0] );
+		var end = Array.prototype.indexOf.call( parent.childNodes, placeholders[1] );
+		for ( var i = start + 1; i < end; i++ ) {
+			nodes.push( parent.childNodes[i] );
+		}
+
+		// If we no actual items, check for a no results item.
+		if ( nodes.length === 0 ) {
+			nodes = Array.from( el.querySelectorAll( "[data-item='nr']" ) );
+		}
+
+		return [parent, nodes, placeholders[1]];
+	}
+
+	/**
+	 * Public AjaxRepeater creation.
+	 *
+	 * @param {any} el
+	 */
+	window.USC.ajaxRepeater = function ( el ) {
+		if ( !( el instanceof HTMLElement ) ) {
+			throw new Error( "Need an HTMLElement to initialize an AjaxRepeater." )
+		} else if ( el.$ajaxRepeater ) {
+			console.log( "AjaxRepeater already initialized." );
+			return;
+		} else {
+			el.$ajaxRepeater = new AjaxRepeater( el );
+		}
+	};
+
+	if ( window.register ) {
+		window.register( 'usc/p/ajax-repeater' );
+	}
+
+} );

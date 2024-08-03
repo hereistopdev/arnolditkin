@@ -1,0 +1,258 @@
+﻿if ( !window.USC ) { window.USC = {}; }
+require2( ['usc/p/poly', 'usc/p/form-proto', 'usc/p/behaviors', 'usc/p/utils'], function () {
+
+	USC.BUTTONS_SELECTOR = "button[type='submit'],input[type='submit'],input[type='image']";
+
+	/**
+	 * Handle a change on an input control.
+	 * 
+	 * @param {ChangeEvent} e
+	 */
+	function handleChange( e ) {
+		// Handle any conditional panels.
+		if ( e.target.classList.contains( 'ui-conditional' ) ) {
+			USC.setConditionals( e.target );
+			e.stopPropagation();
+		}
+		if ( e.detail && e.detail.originalEvent ) {
+			// Original change event.
+			e = e.detail.originalEvent;
+		}
+		if ( !e.target || !e.target.validity ) {
+			// Not an element with validity.
+			return;
+		} else if ( e.target.validity.customError ) {
+			// Reset any custom validity when the value is changed.
+			e.target.setCustomValidity( "" );
+		}
+
+		// A required checkbox list needs a little help, native validation chokes.
+		if ( e.target.matches( "input[type='checkbox'][data-required]" ) ) {
+			// Find the related inputs.
+			var name = e.target.getAttribute( 'name' );
+			var inputs = this.form.querySelectorAll( "input[type='checkbox'][data-required][name='" + name + "']" );
+
+			// Are any of the inputs checked?
+			var anyChecked = false;
+			for ( var i = 0; i < inputs.length; i++ ) {
+				if ( inputs[i].checked ) {
+					anyChecked = true;
+					break;
+				}
+			}
+
+			// Adjust the required state of the individual checkboxes.
+			for ( var i = 0; i < inputs.length; i++ ) {
+				var input = inputs[i];
+				if ( !anyChecked || input.checked ) {
+					// If nothing is checked, or this one is, set it as required.
+					input.required = true;
+					input.setAttribute( 'required', 'required' );
+				} else {
+					// Otherwise we don't need this to be required.
+					input.required = false;
+					input.removeAttribute( 'required' );
+				}
+			}
+		}
+
+		// Get the parent element and add/remove a filled class based on the input's value.
+		var parent = getParent( e.target );
+		if ( e.target.value ) {
+			parent.classList.add( 'filled' );
+		} else {
+			parent.classList.remove( 'filled' );
+		}
+
+		if ( e.target.getAttribute( 'data-ga-search' ) ) {
+			const gglChk = parent.querySelector( '[data-ga-target="googleaddress"]' );
+			if ( gglChk ) gglChk.checked = false;
+		}
+
+		// If the element passes validity, fire the invalid event to refresh the ValidityState UI.
+		if ( e.target.checkValidity && e.target.checkValidity() ) {
+			if ( inputs && inputs.length ) {
+				inputs.forEach( function ( el ) {
+					el.trigger( 'invalid' );
+				} );
+			} else {
+				e.target.trigger( 'invalid' );
+			}
+		}
+	}
+
+	/**
+	 * Handle an invalid event from an input.
+	 * 
+	 * @param {InvalidEvent} e
+	 */
+	function handleInvalid( e ) {
+		if ( e.target === this.form ) {
+			// Don't bother with the invalid event fired by the form container itself.
+			return;
+		}
+
+		var validity = e.target.validity;
+		if ( !validity ) {
+			return;
+		}
+
+		// Get the containing LI of the element that was invalid.
+		var parent = getParent( e.target );
+
+		if ( validity.valid ) {
+			// Set validity and exit.
+			parent.classList.remove( 'invalid' );
+			if ( parent.getAttribute( 'data-validity' ) !== null ) {
+				parent.classList.add( 'valid' );
+				parent.setAttribute( 'data-validity', 'valid' );
+			}
+			return;
+		}
+
+		// How did the validity fail?
+		var type = validity.getType();
+
+		// Set the state of the parent element.
+		parent.classList.remove( 'valid' );
+		parent.classList.add( 'invalid' );
+		parent.setAttribute( 'data-validity', type || "" );
+
+		// If we have a custom validation message in the HTML.
+		if ( parent.querySelector( "[data-validity='" + type + "'],.validation[data-type='" + type + "']" ) ) {
+			// Prevent the default message from showing up.
+			e.preventDefault();
+		}
+		return false;
+	}
+
+	/**
+	 * Handle a form submission.
+	 * 
+	 * @param {SubmitEvent} e
+	 */
+	function handleSubmit( e ) {
+		// If we clicked on a button without a formnovalidate, check the validity and exit if it fails.
+		if ( this.$last && !this.$last.attributes['formnovalidate'] && !this.form.checkValidity() ) {
+			this.form.reportValidity();
+			e.preventDefault();
+			return false;
+		}
+
+		// If this button as a noloading attribute, exit.
+		if ( this.$last && this.$last.attributes['data-noloading'] ) {
+			return;
+		}
+
+		// Mark the form as loading.
+		this.form.classList.add( 'loading' );
+
+		// Disable the buttons after the form has been submitted.
+		var buttons = this.form.querySelectorAll( USC.BUTTONS_SELECTOR );
+		setTimeout( function () {
+			for ( var i = 0; i < buttons.length; i++ ) {
+				var el = buttons[i];
+				el.setAttribute( 'disabled', 'disabled' );
+				el.disabled = true;
+			}
+		}, 1 );
+	}
+
+	/**
+	 * Handle a form click.
+	 * 
+	 * @param {any} e
+	 */
+	function handleClick( e ) {
+		// Note if the last click was on a button.
+		this.$last = e.target.closest( USC.BUTTONS_SELECTOR );
+
+		if ( this.$last && this.$ffd6 ) {
+			this.$ffd6.value = new Date().getTime();	
+        }
+
+		// If we have a validation button, check the validity.
+		if ( this.$last && !this.$last.attributes["formnovalidate"] && !this.form.reportValidity() ) {
+			// Don't allow the submit.
+			e.preventDefault();
+		}
+	}
+
+	/**
+	 * Handle focus events on an input control.
+	 * 
+	 * @param {FocusEvent} e
+	 */
+	function handleFocus( e ) {
+		// Look for a focusable element.
+		if ( e.target && e.target.matches( 'input, label, textarea, select' ) ) {
+
+			// Look for a parent list item or input-text. Fall back to the element itself.
+			var parent = e.target.closest( 'li' ) || e.target.closest( '.input-text' ) || e.target;
+
+			// Add/Remove the "focused" class.
+			if ( e.type === 'focusin' ) {
+				parent.classList.add( 'focused' );
+			} else {
+				parent.classList.remove( 'focused' );
+			}
+		}
+	}
+
+	/**
+	 * Get and return the parent element.
+	 * @param {HTMLElement} el 
+	 * @returns {HTMLElement}
+	 */
+	function getParent( el ) {
+		// If we have a parent input-suggest, start there.
+		var suggest = el.closest( ".input-suggest" );
+		if ( suggest ) {
+			el = suggest;
+		}
+
+		// Look for a named validity element, or the closest LI, or the element itself.
+		return el.closest( "[data-validity]" ) || el.closest( "li" ) || el;
+	}
+
+	/**
+	 * Create a FormControl.
+	 * 
+	 * @param {HTMLFormElement} el
+	 */
+	function FormControl( el ) {
+		this.form = el;
+		el.addEventListener( 'change', handleChange.bind( this ) );
+		el.addEventListener( 'invalid', handleInvalid.bind( this ), true );
+		el.addEventListener( 'submit', handleSubmit.bind( this ) );
+		el.addEventListener( 'click', handleClick.bind( this ) );
+		el.addEventListener( 'focusin', handleFocus.bind( this ) );
+		el.addEventListener( 'focusout', handleFocus.bind( this ) );
+
+		var ffd6 = el.querySelector( "input[id$='_FFD6']" );
+		if ( ffd6 ) {
+			ffd6.value = new Date().getTime();
+			this.$ffd6 = ffd6;
+		}
+	}
+
+	/**
+	 * Public form creation method.
+	 * 
+	 * @param {HTMLFormElement} el
+	 */
+	window.USC.form = function ( el ) {
+		if ( !( el instanceof HTMLFormElement ) ) {
+			throw new Error( "Need an HTMLFormElement to initialize a FormControl." )
+		} else if ( el.$form ) {
+			console.warn( "FormControl already initialized." );
+			return;
+		} else {
+			el.$form = new FormControl( el );
+		}
+	};
+
+	if ( window.register ) {
+		window.register( 'usc/p/form' );
+	}
+} );

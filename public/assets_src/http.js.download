@@ -1,0 +1,306 @@
+﻿if ( !window.USC ) { window.USC = {}; }
+( function () {
+
+	/**
+	 * Perform a simple http get on a resource.
+	 * 
+	 * @param {string} url
+	 * @param {Function} onSuccess
+	 * @param {Function} onError
+	 * @returns {XMLHttpRequest}
+	 */
+	USC.get = function ( url, onSuccess, onError ) {
+		return USC.send( { url: url }, onSuccess, onError );
+	};
+
+	/**
+	 * Perform a simple http post on a resource.
+	 * 
+	 * @param {string} url
+	 * @param {any} payload
+	 * @param {Function} onSuccess
+	 * @param {Function} onError
+	 * @returns {XMLHttpRequest}
+	 */
+	USC.post = function ( url, payload, onSuccess, onError ) {
+		return USC.send( { url: url, method: 'POST', payload: payload }, onSuccess, onError );
+	};
+
+	/**
+	 * Send an http request, handling errors and processing the response.
+	 * 
+	 * @param {any} options
+	 * @param {Function} onSuccess
+	 * @param {Function} onError
+	 * @returns {XMLHttpRequest}
+	 */
+	USC.send = function ( options, onSuccess, onError ) {
+		// Error handler.
+		var err = function ( txt, err, status, headers ) {
+			if ( typeof onError === 'function' ) {
+				try { onError( txt, err, status, headers ); }
+				catch ( ex ) { console.error( ex, arguments ); }
+			} else {
+				console.error( txt, err, status, headers );
+			}
+		};
+
+		return USC.xhr(
+			options,
+			// Success function.
+			function ( data, headers ) {
+				var contentType = headers && headers["content-type"];
+				var result;
+				if ( options && options.dataType === 'text' ) {
+					result = data;
+				} else if ( contentType && contentType.indexOf( 'text/' ) === 0 ) {
+					result = data;
+				} else {
+					try { result = parse( JSON.parse( data ) ); }
+					catch ( ex ) {
+						console.error( ex, [options, data] );
+						err( data, ex );
+					}
+				}
+				if ( typeof onSuccess === 'function' ) {
+					onSuccess( result, headers );
+				} else {
+					console.log( result );
+				}
+			},
+			// Error function.
+			err
+		);
+	};
+
+	/**
+	 * Do an XMLHttpRequest.
+	 * 
+	 * @param {any} options
+	 * @param {Function} onSuccess
+	 * @param {Function} onError
+	 * @returns {XMLHttpRequest}
+	 */
+	USC.xhr = function ( options, onSuccess, onError ) {
+		// Get the XHR options.
+		var url = options.url;
+		var method = options.method || 'GET';
+		var headers = options.headers || {};
+
+		// Add the referring url.
+		headers["x-request-from"] = window.location.href;
+
+		var payload = options.payload;
+		if ( payload && typeof payload !== 'string' ) {
+			if ( payload instanceof FormData ) {
+				// Leave a FormData object alone.
+			} else if ( options.form === true ) {
+				// Pass the data as urlencoded form data.
+				payload = formEncoded( payload );
+				headers['Content-Type'] = 'application/x-www-form-urlencoded';
+			} else {
+				// Stringify the data.
+				payload = JSON.stringify( payload );
+				if ( !headers["content-type"] ) {
+					headers["content-type"] = "application/json";
+				}
+			}
+		}
+		if ( typeof onError !== 'function' ) {
+			onError = console.log;
+		}
+
+		// Build the request.
+		var xhr = new XMLHttpRequest();
+		if ( options.withCredentials ) {
+			xhr.withCredentials = true;
+		}
+
+		// Wire up the events.
+		xhr.addEventListener( 'load', function ( evt ) {
+			var headers = getHeaders( xhr );
+			if ( xhr.status >= 200 && xhr.status < 300 ) {
+				onSuccess && onSuccess( xhr.responseText, headers );
+			} else {
+				onError && onError( xhr.responseText, evt, xhr.status, headers );
+			}
+		} );
+		xhr.addEventListener( 'error', function ( evt ) {
+			onError( xhr.responseText, evt, xhr.status );
+		} );
+
+		// Open the request.
+		xhr.open( method, url, true );
+
+		// Set any headers.
+		for ( var key in headers ) {
+			if ( headers.hasOwnProperty( key ) ) {
+				var value = headers[key];
+				if ( key && value ) {
+					xhr.setRequestHeader( key, value );
+				}
+			}
+		}
+		xhr.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
+
+		// Run it.
+		try {
+			xhr.send( payload );
+		} catch ( ex ) {
+			onError( xhr.responseText, ex );
+		}
+
+		return xhr;
+	};
+
+	/**
+	 * Return an object of XHR headers.
+	 * 
+	 * @param {XMLHttpRequest} xhr
+	 */
+	function getHeaders( xhr ) {
+		var headers = {};
+		var text = xhr.getAllResponseHeaders();
+		if ( !text ) {
+			return headers;
+		}
+		var items = text.split( /\r\n/ );
+		for ( var i = 0; i < items.length; i++ ) {
+			var item = items[i].split( /: / );
+			var key = item.shift();
+			var value = item.join( ": " );
+			if ( key && value ) {
+				headers[key.toLowerCase()] = value;
+			}
+		}
+		return headers;
+	}
+
+	/**
+	 * Parse fields / row data into an array of objects.
+	 * 
+	 * @param {any} result
+	 * @returns {any}
+	 */
+	function parse( result ) {
+		if ( result && result.fields && result.rows ) {
+			var list = [];
+			for ( var i = 0; i < result.rows.length; i++ ) {
+				var row = result.rows[i];
+				// Map the fields/row data into a collection.
+				var item = {};
+				for ( var j = 0; j < result.fields.length; j++ ) {
+					var val = row[j];
+					// Check for and handle any parsed date values.
+					if ( typeof val === 'string' ) {
+						var date = parseDateValue( val );
+						if ( date ) {
+							val = date;
+						}
+					} else if ( Object.isPlainObject( val ) ) {
+						parseObjectDateValues( val );
+					} else if ( Array.isArray( val ) ) {
+						parseArrayDateValues( val );
+					}
+					item[result.fields[j]] = val;
+				}
+				list.push( item );
+			}
+			return list;
+		} else if ( Array.isArray( result ) ) {
+			// Parse any stringified date values for the items in the array..
+			parseObjectDateValues( result );
+		} else if ( Object.isPlainObject( result ) ) {
+			// Parse any stringified date values in the result.
+			parseObjectDateValues( result );
+		}
+		return result;
+	}
+
+	/**
+	 * Return the key/value pairs of an object into form encoded string.
+	 * 
+	 * @param {any} obj
+	 * @returns {string}
+	 */
+	function formEncoded( obj ) {
+		var values = [];
+		for ( var p in obj ) {
+			if ( obj.hasOwnProperty( p ) ) {
+				var value = obj[p];
+				if ( Array.isArray( value ) || Object.isPlainObject( value ) ) {
+					value = JSON.stringify( value );
+				}
+				values.push( "key=" + encodeURIComponent( value ) );
+			}
+		}
+		return values.join( '&' );
+	}
+
+	/**
+	 * Look for stringified date values in an item and fix them.
+	 * 
+	 * @param {Object} item
+	 */
+	function parseObjectDateValues( item ) {
+		for ( var field in item ) {
+			if ( item.hasOwnProperty( field ) ) {
+				var val = item[field];
+				if ( typeof val === 'string' ) {
+					// Try and convert a date value if we find it.
+					var date = parseDateValue( val );
+					if ( date ) {
+						item[field] = date;
+					}
+				} else if ( Object.isPlainObject( val ) ) {
+					// Recurse to child properties.
+					parseObjectDateValues( val );
+				} else if ( Array.isArray( val ) ) {
+					// If we have an array of objects, recursively parse them.
+					parseArrayDateValues( val );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check for items in an array that need to be parsed.
+	 * 
+	 * @param {any[]} array
+	 */
+	function parseArrayDateValues( array ) {
+		for ( var i = 0; i < array.length; i++ ) {
+			var val = array[i];
+			if ( typeof val === 'string' ) {
+				var date = parseDateValue( val );
+				if ( date ) {
+					array[i] = date;
+				}
+			} else if ( Object.isPlainObject( val ) ) {
+				parseObjectDateValues( val );
+			} else if ( Array.isArray( val ) ) {
+				parseArrayDateValues( val );
+			}
+		}
+	}
+
+	/**
+	 * Parse a single date value.
+	 * 
+	 * @param {string} val
+	 * @returns {Date}
+	 */
+	function parseDateValue( val ) {
+		if ( /^\d{4}\-\d{2}\-\d{2}T/.test( val ) ) {
+			var date = new Date( val );
+			if ( !isNaN( date ) ) {
+				return date;
+			}
+		}
+		return null;
+	}
+
+	if ( window.register ) {
+		window.register( 'usc/p/http' );
+	}
+} )();

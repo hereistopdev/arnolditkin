@@ -1,0 +1,610 @@
+﻿if ( !window.USC ) { window.USC = {}; }
+require2( ['usc/p/utils'], function () {
+	var eventMap = {};
+
+	/**
+	 * Take a template element and wrap it's contents in a modal dialog box.
+	 *
+	 * @param {HTMLTemplateElement} t
+	 * @param {Object} options
+	 */
+	function Dialog( t, options ) {
+		var tcontent = t.content || t;
+
+		// Get the current elements inside the template.
+		var nodes = [];
+		for ( var i = 0; i < tcontent.childNodes.length; i++ ) {
+			nodes.push( tcontent.childNodes[i] );
+		}
+
+		this.options = options || {};
+
+		// Set the dialog html in the template.
+		t.innerHTML = this.options.form ? dialogTemplateForm : dialogTemplate;
+
+		var dialog = tcontent.querySelector( 'div.ui-dialog' );
+		setDimension( dialog, 'width', options.width );
+		setDimension( dialog, 'height', options.height );
+		setDimension( dialog, 'min-width', options.minWidth );
+		setDimension( dialog, 'min-height', options.minHeight );
+
+		// Set the dialog position.
+		if ( !this.options.cssPosition ) {
+			dialog.style.setProperty( 'position', 'fixed' );
+			dialog.style.setProperty( 'left', '0' );
+			dialog.style.setProperty( 'top', '0' );
+		}
+
+		// Add any dialog classes.
+		var classes;
+		if ( this.options.dialogClass ) {
+			classes = this.options.dialogClass.split( ' ' );
+			for ( var i = 0; i < classes.length; i++ ) {
+				var cls = classes[i];
+				if ( cls ) {
+					dialog.classList.add( cls );
+				}
+			}
+		}
+
+		// Add any overlay classes.
+		var overlay = t.content.querySelector( 'div.ui-widget-overlay' );
+		if ( this.options.overlayClass ) {
+			classes = this.options.overlayClass.split( ' ' );
+			for ( var i = 0; i < classes.length; i++ ) {
+				var ocls = classes[i];
+				if ( ocls ) {
+					overlay.classList.add( ocls );
+				}
+			}
+		}
+
+		// Get the title bar
+		var titlebar = tcontent.querySelector( 'div.ui-dialog-titlebar' );
+		if ( this.options.noEscape ) {
+			// Set the close for no-escape.
+			var close = titlebar.querySelector( 'button.ui-dialog-titlebar-close' );
+			close.removeAttribute( 'data-action' );
+			close.setAttribute( 'data-noescape', '' );
+			close.style.setProperty( 'display', 'none' );
+		}
+
+		// Add any title.
+		var title = tcontent.querySelector( 'span.ui-dialog-title' );
+		if ( this.options.title ) {
+			title.textContent = this.options.title;
+		}
+
+		// Locate the insertion point.
+		var content = tcontent.querySelector( 'aside.ui-dialog-content' );
+
+		// Move the old nodes into it.
+		for ( var i = 0; i < nodes.length; i++ ) {
+			var node = nodes[i];
+			content.appendChild( node );
+		}
+
+		// Get the button sets.
+		var buttonset = tcontent.querySelector( 'div.ui-dialog-buttonset' );
+
+		var buttons = this.options.buttons;
+		if ( !buttons ) {
+			// Use the default buttons.
+			buttons = [{ text: 'Close' }];
+		} else if ( !buttons.length ) {
+			// No buttons, remove the buttonset.
+			buttonset.remove();
+			buttonset = null;
+		}
+
+		// Add the buttons.
+		for ( var i = 0; i < buttons.length; i++ ) {
+			var button = buttons[i];
+			buttonset.appendChild( makeButton( button ) );
+		}
+
+		// Put the template inside a container div up to the body element.
+		var p = document.createElement( 'div' );
+		p.setAttribute( 'data-dialog', USC.guid() );
+		p.appendChild( t );
+		document.body.appendChild( p );
+
+		// Note the elements.
+		this.parent = p;
+		this.template = t;
+		this.element = dialog;
+		this.nodes = [];
+		for ( var i = 0; i < tcontent.childNodes.length; i++ ) {
+			this.nodes.push( tcontent.childNodes[i] );
+		}
+		this.els = {
+			titlebar: titlebar,
+			title: title,
+			content: content,
+			buttonset: buttonset,
+			overlay: overlay
+		};
+
+		// Get the last element that can be tabbed onto.
+		var focusable = this.element.querySelectorAll( "a,button,input,textarea,select,details,[tabindex]:not([tabindex='-1'])" );
+		this.els.lastFocus = focusable[focusable.length - 1];
+
+		// Wire up click events.
+		this.parent.addEventListener( 'click', function ( e ) {
+			return this.handleClick( e );
+		}.bind( this ) );
+
+		// Handle a close on keydowns.
+		this.element.addEventListener( 'keydown', function ( e ) {
+			var closing;
+			if ( this.options.noEscape ) {
+				return;
+			} else if ( e.keyCode === 27 ) {
+				// Close on escape.
+				closing = true;
+			} else if ( e.keyCode == 9 ) {
+				if ( e.shiftKey && e.target === this.element ) {
+					// If we're shift-tabbing from the main element close the dialog.
+					closing = true;
+				} else if ( !e.shiftKey && e.target == this.els.lastFocus ) {
+					// If we're tabbing off of the last focusable element, close the dialog.
+					closing = true;
+				}
+			}
+
+			if ( closing ) {
+				e.preventDefault();
+				this.close();
+			}
+		}.bind( this ) );
+
+		this._open = false;
+	}
+
+	/**
+	 * Set the css dimensions.
+	 * 
+	 * @param {HTMLElement} el
+	 * @param {string} prop
+	 * @param {any} value
+	 */
+	function setDimension( el, prop, value ) {
+		if ( !el || !prop || !value || value === 'css' ) {
+			return;
+		}
+		if ( typeof value === 'number' ) {
+			el.style.setProperty( prop, value + 'px' );
+		} else if ( typeof value === 'string' ) {
+			el.style.setProperty( prop, value );
+		}
+	}
+
+	/**
+	 * Is the dialog box open?
+	 */
+	Dialog.prototype.isOpen = function () {
+		return this._open;
+	};
+
+	/**
+	 * Open the dialog box.
+	 */
+	Dialog.prototype.open = function () {
+		if ( !this.isOpen() ) {
+			// Move the dialog nodes outside of the template.
+			for ( var i = 0; i < this.nodes.length; i++ ) {
+				var node = this.nodes[i];
+				this.parent.insertBefore( node, this.template );
+			}
+
+			// If we're not overriding, position the nodes
+			if ( !this.options.cssPosition ) {
+				position( this.nodes );
+			}
+
+			// Allow focus on the dialog element.
+			this.element.setAttribute( 'tabindex', '0' );
+			this.focusFirst();
+		}
+	};
+	
+	/**
+	 * Focus on the first dialog element.
+	 */
+	Dialog.prototype.focusFirst = function () {
+		// Focus on the main dialog element after a slight delay.
+		var focus = this.element;1
+		setTimeout( function () {
+			focus.focus();
+		}, 100 );
+	};
+
+	/**
+	 * Set the HTML of the dialog box.
+	 * 
+	 * @param {string} html
+	 */
+	Dialog.prototype.setHtml = function ( html ) {
+		// Turn the HTML into nodes and fetch the first aside element.
+		var parser = new DOMParser();
+		var doc = parser.parseFromString( html, 'text/html' );
+		var aside = doc.querySelector( 'aside' );
+		if ( !aside ) {
+			throw new Error( 'Couldn\'t find <aside> element in dialog html' );
+		} else {
+			// Set the content class.
+			aside.classList.add( 'ui-dialog-content' );
+		}
+
+		// Replace the old content with the new content.
+		var parent = this.els.content.parentElement;
+		parent.insertBefore( aside, this.els.content );
+		this.els.content.remove();
+		this.els.content = aside;
+	};
+
+	/**
+	 * Set the contents of the dialog box.
+	 * 
+	 * @param {HTMLElement} el
+	 */
+	Dialog.prototype.setElement = function ( aside ) {
+		// Set the content class.
+		aside.classList.add( 'ui-dialog-content' );
+
+		// Replace the old content with the new content.
+		var parent = this.els.content.parentElement;
+		parent.insertBefore( aside, this.els.content );
+		this.els.content.remove();
+		this.els.content = aside;
+	};
+
+	/**
+	 * When clicking on the dialog box container
+	 * (not the content, which has handled separately.)
+	 * 
+	 * @param {MouseEvent} e
+	 */
+	Dialog.prototype.handleClick = function ( e ) {
+		// Ignore clicks in the content -- those are handled separately.
+		if ( !this.els.content.contains( e.target ) ) {
+			var data = USC.linkData( e );
+			if ( data.action === 'Close' || e.target.classList.contains('ui-widget-overlay') ) {
+				this.close();
+			}
+		}
+	};
+
+	/**
+	 * Close the dialog box.
+	 */
+	Dialog.prototype.close = function () {
+		// Stop any media.
+		var media = this.els.content.querySelectorAll( 'video,audio' );
+		for ( var i = 0; i < media.length; i++ ) {
+			try { media[i].stop(); }
+			catch ( ex ) { ; }
+		}
+
+		// Prevent focus on the dialog element.
+		this.element.setAttribute( 'tabindex', '-1' );
+
+		var content = this.template.content || this.template;
+		var nodes = this.nodes;
+		out( this.template, function () {
+			if ( this.options.persist ) {
+				// Move the dialog nodes inside of the template.
+				for ( var i = 0; i < nodes.length; i++ ) {
+					var node = nodes[i];
+					content.appendChild( node );
+				}
+			} else {
+				// Destroy the dialog.
+				this.dispose();
+			}
+
+			// If we have a return element stored, move the focus back to it.
+			if ( this.options.returnTo ) {
+				this.options.returnTo.focus();
+			}
+		}.bind( this ) );
+	};
+
+	/**
+	 * Clean up the dialog.
+	 */
+	Dialog.prototype.dispose = function () {
+		removeDialogEvents( this.parent );
+		this.parent.remove();
+		this.parent = null;
+		this.template = null;
+		this.nodes = null;
+		this.element = null;
+		this.els = null;
+	};
+
+	/**
+	 * Position the dialog box in the center of the screen.
+	 * 
+	 * @param {number | string} id
+	 * @param {HTMLElement[]} nodes
+	 */
+	function position( nodes ) {
+		if ( !nodes || !nodes.length ) {
+			throw new Error( 'Missing dialog nodes for positioning.' );
+			return;
+		}
+
+		// Get the parent element and the unique id.
+		var p = nodes[0].parentElement;
+		var id = p && p.getAttribute( 'data-dialog' );
+		if ( !id ) {
+			throw new Error( 'Missing dialog id.' );
+			return;
+		}
+
+		// Get the dialog node.
+		var dialog;
+		for ( var i = 0; i < nodes.length; i++ ) {
+			var node = nodes[i];
+			if ( node.classList.contains( 'ui-dialog' ) ) {
+				dialog = node;
+				break;
+			}
+		}
+		if ( dialog ) {
+			// Calculate the position.
+			var dim = dialog.getBoundingClientRect();
+			var innerWidth = window.innerWidth;
+			var innerHeight = window.innerHeight;
+			var left = ( innerWidth - dim.width ) / 2;
+			var top = ( innerHeight - dim.height ) / 2;
+			var position = 'fixed';
+			if ( top < 0 ) {
+				top = window.scrollX + 20;
+				position = 'absolute';
+			}
+			if ( left < 0 ) {
+				left = 0;
+				position = 'absolute';
+			}
+
+			// Set the style.
+			dialog.style.setProperty( 'position', position );
+			dialog.style.setProperty( 'left', left + 'px' );
+			dialog.style.setProperty( 'top', top + 'px' );
+
+			// Always move the latest-opened dialog box to the end.
+			document.body.appendChild( p );
+
+			// Wire up the events.
+			addDialogEvents( p );
+		} else {
+			removeDialogEvents( p );
+		}
+	}
+
+	/**
+	 * Create a button off of options.
+	 * 
+	 * @param {any} options
+	 */
+	function makeButton( options ) {
+		var text = options.text;
+		if ( !text ) {
+			throw new Error( 'Missing button text for dialog box' );
+		}
+
+		var action = options.action || text;
+		var button = document.createElement( 'button' );
+		button.setAttribute( 'class', 'ui-button ui-btn-' + USC.urlfriendly( action ) );
+		button.setAttribute( 'data-action', action );
+		button.textContent = text;
+		return button;
+	}
+
+	/**
+	 * Close a dialog box with a fade-out.
+	 * 
+	 * @param {HTMLTemplateElement} t
+	 */
+	function out( t, handler ) {
+		// Get the overlay and dialog.
+		var p = t.parentElement;
+		var overlay = p.querySelector( 'div.ui-widget-overlay' );
+		var dialog = p.querySelector( 'div.ui-dialog' );
+
+		if ( overlay && dialog ) {
+			// Start the 'out' animation.
+			overlay.classList.add( 'out' );
+			dialog.classList.add( 'dialog-out' );
+			setTimeout( function () {
+				// Remove the classes once it's out.
+				overlay.classList.remove( 'out' );
+				dialog.classList.remove( 'dialog-out' );
+				if ( typeof handler === 'function' ) {
+					handler();
+				}
+			}, 300 );
+		}
+
+		// Clear the events.
+		removeDialogEvents( p );
+	}
+
+	/**
+	 * Add events to the dialog parent node as needed.
+	 * 
+	 * @param {HTMLElement} p
+	 */
+	function addDialogEvents( p ) {
+		var id = p.getAttribute( 'data-dialog' );
+		var sub = eventMap[id];
+		if ( sub ) {
+			return;
+		}
+
+		// Calculate the positions.
+		var ui = {
+			el: null,
+			x: 0,
+			y: 0,
+			left: 0,
+			top: 0,
+			right: 0,
+			bottom: 0
+		};
+
+		/**
+		 * Move the element to match the mouse.
+		 * 
+		 * @param {MouseEvent} e
+		 */
+		var move = function ( e ) {
+			var left = Math.max( 3, Math.min( ui.right, e.pageX - ui.x + ui.left ) );
+			var top = Math.max( 3, Math.min( ui.bottom, e.pageY - ui.y + ui.top ) );
+			ui.el.style.setProperty( 'left', left + 'px' );
+			ui.el.style.setProperty( 'top', top + 'px' );
+		};
+
+		/**
+		 * Start the drag.
+		 * 
+		 * @param {MouseEvent} e
+		 */
+		var start = function ( e ) {
+			var handle = e.target.closest( '.ui-draggable-handle' );
+			if ( !handle ) {
+				return;
+			}
+
+			// Set the initial state.
+			ui.el = handle.closest( 'div.ui-dialog' );
+			ui.left = parseFloat( ui.el.style.getPropertyValue( 'left' ) );
+			ui.top = parseFloat( ui.el.style.getPropertyValue( 'top' ) );
+			ui.x = e.pageX;
+			ui.y = e.pageY;
+
+			// Set the limits.
+			var dim = ui.el.getBoundingClientRect();
+			var innerWidth = window.innerWidth;
+			var innerHeight = window.innerHeight;
+			// Try and get the width without the window scrollbar.
+			var width = Math.min( innerWidth, document.documentElement.clientWidth );
+			ui.right = width - dim.width - 3;
+			ui.bottom = innerHeight - dim.height - 3;
+
+			document.addEventListener( 'mousemove', move );
+		};
+
+		/**
+		 * Stop the drag.
+		 */
+		var stop = function () {
+			ui.el = null;
+			document.removeEventListener( 'mousemove', move );
+		};
+
+		// Note the subscsription.
+		sub = {
+			unsubscribe: function () {
+				p.removeEventListener( 'mousedown', start );
+				document.removeEventListener( 'mouseup', stop );
+			}
+		};
+
+		// Wire up the events.
+		p.addEventListener( 'mousedown', start );
+		document.addEventListener( 'mouseup', stop );
+		eventMap[id] = sub;
+	}
+
+	/**
+	 * Remove events from the dialog parent node.
+	 * 
+	 * @param {any} p
+	 */
+	function removeDialogEvents( p ) {
+		// Unsubscribe from any events.
+		var id = p.getAttribute( 'data-dialog' );
+		var sub = eventMap[id];
+		if ( sub ) {
+			sub.unsubscribe();
+			delete eventMap[id];
+			return;
+		}
+	}
+
+	/**
+	 * Public Dialog creation.
+	 *
+	 * @param {string} contents
+	 * @param {any} options
+	 */
+	window.USC.dialog = function ( contents, options ) {
+		var template;
+		if ( contents && contents.matches && contents.matches( 'template' ) ) {
+			template = contents;
+			contents = null;
+		} else {
+			template = document.createElement( 'template' );
+			// IE11 compatibility fix.
+			if ( HTMLTemplateElement.decorate ) {
+				HTMLTemplateElement.decorate( template );
+			}
+		}
+
+		var dialog = new Dialog( template, options || {} );
+		if ( typeof contents === 'string' ) {
+			dialog.setHtml( contents );
+		} else if ( contents instanceof HTMLElement ) {
+			dialog.setElement( contents );
+		}
+
+		dialog.open();
+		return dialog;
+	};
+
+	const dialogTemplate =
+'<div class="ui-widget-overlay"></div>'+
+'<div tabindex="-1" role="dialog" class="ui-dialog">'+
+'	<div class="ui-dialog-titlebar">'+
+'		<span class="ui-dialog-title"></span>'+
+'		<button type="button" class="ui-button ui-dialog-titlebar-close" title="Close Pop-up" data-action="Close">'+
+'			<span class="ui-button-icon ui-icon ui-icon-closethick"></span>'+
+'			<span class="ui-button-icon-space"> </span>'+
+'		</button>'+
+'	</div>'+
+'	<aside class="ui-dialog-content"></aside>'+
+'	<div class="ui-dialog-buttonpane">'+
+'		<div class="ui-dialog-buttonset"></div>'+
+'	</div>'+
+'</div>';
+
+	const dialogTemplateForm =
+'<div class="ui-widget-overlay"></div>'+
+'<div tabindex="-1" role="dialog" class="ui-dialog">'+
+'	<form action="javascript:void(0)">'+
+'		<div class="ui-dialog-titlebar">'+
+'			<span class="ui-dialog-title"></span>'+
+'			<button type="button" class="ui-button ui-dialog-titlebar-close" title="Close Pop-up" data-action="Close">'+
+'				<span class="ui-button-icon ui-icon ui-icon-closethick"></span>'+
+'				<span class="ui-button-icon-space"> </span>'+
+'			</button>'+
+'		</div>'+
+'		<aside class="ui-dialog-content"></aside>'+
+'		<div class="ui-dialog-buttonpane">'+
+'			<div class="ui-dialog-buttonset"></div>'+
+'		</div>'+
+'	</form>'+
+'</div>';
+
+	if ( typeof HTMLTemplateElement === 'undefined' ) {
+		// Load the IE11 template polyfill before registering.
+		require2( ['usc/p/poly-template'], function () {
+			window.register( 'usc/p/dialog' );
+		} );
+	} else if ( window.register ) {
+		window.register( 'usc/p/dialog' );
+	}
+} );

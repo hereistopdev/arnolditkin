@@ -1,0 +1,222 @@
+﻿if ( !window.USC ) { window.USC = {}; }
+( function () {
+	var parseJson = function ( text, reviver ) { return ( window.JSON2 || JSON ).parse( text, reviver ) };
+
+	/**
+	 * Set a tabs state.
+	 * 
+	 * @param {HTMLElement} scope
+	 * @param {string | HTMLElement} name
+	 * @returns {any}
+	 */
+	USC.setTabs = function ( scope, name ) {
+		if ( !scope || !scope.querySelectorAll ) {
+			return;
+		}
+
+		// If the scope passed was a ui-tab element.
+		if ( !name && scope.classList.contains( 'ui-tab' ) ) {
+			name = scope.getAttribute( 'data-tab' );
+			scope = scope.closest( '.ui-tabs' );
+		}
+
+		// If we were passed an element (instead of a name).
+		var sel;
+		if ( name && name.getAttribute ) {
+			sel = name;
+			name = sel.getAttribute( 'data-tab' ) || "";
+		}
+
+		// All tab items.
+		var tabs = Array.from( scope.querySelectorAll( ".ui-tab" ) );
+		// Do we have an active toggle element?
+		var toggle = tabs.find( function ( t ) {
+			return t.getAttribute( 'data-tab' ) === name && t.matches( '.ui-toggle.active' );
+		} );
+		// All tab panels.
+		var panels = Array.from( scope.querySelectorAll( ".ui-tab-panel" ) );
+		// Any child tab collections that would be out of scope.
+		var sub = Array.from( scope.querySelectorAll( ".ui-tabs" ) );
+		// If we have an active toggle, turn it off, otherwise, turn it on.
+		var setActive = !toggle;
+
+		// Test for an out of scope element.
+		var out = function ( el ) {
+			for ( var i = 0; i < sub.length; i++ ) {
+				var el2 = sub[i];
+				if ( el2 === el ) {
+					// An element can be a ui-tabs AND a ui-tab-panel.
+					continue;
+				} else if ( el2.contains( el ) ) {
+					// This element is in a child tabs scope.
+					return true;
+				}
+			}
+		};
+		// Set the active state.
+		var set = function ( el ) {
+			// Skip over nested tab elements.
+			if ( out( el ) ) { return; }
+
+			var active;
+			if ( sel && el === sel ) {
+				active = setActive;
+			} else if ( name && el.getAttribute( 'data-tab' ) === name ) {
+				active = setActive;
+				sel = el;
+			} else if ( name === '*' && el.classList.contains( 'ui-tab-panel' ) ) {
+				active = setActive;
+				sel = '';
+			}
+			el.classList[active ? 'add' : 'remove']( 'active' );
+		};
+
+		// Set the tabs and the panels.
+		tabs.forEach( set );
+		panels.forEach( set );
+		if ( setActive ) {
+			scope.setAttribute( 'data-activetab', name || "" );
+		} else {
+			scope.removeAttribute( 'data-activetab' );
+		}
+
+		// Trigger a tabbed event.
+		var detail = { name: name, tabs: tabs, panels: panels };
+		if ( scope.trigger ) {
+			scope.trigger( 'tabbed', detail );
+		}
+
+		// Trigger a resize for anything detecting position and state.
+		window.trigger( 'resize' );
+
+		// Return the activated tabs and panels.
+		return detail;
+	}
+
+	/**
+	 * Set a conditionals state.
+	 * 
+	 * @param {HTMLElement} input
+	 * @returns {any}
+	 */
+	USC.setConditionals = function ( input ) {
+		if ( !input || !input.querySelectorAll ) {
+			return;
+		}
+		// Get matching conditional panels.
+		var panels = USC.getConditionalPanels( input );
+		if ( !panels ) {
+			return;
+		}
+
+		var itemValue = USC.getConditionalValue( input );
+
+		for ( var i = 0; i < panels.length; i++ ) {
+			var panel = panels[i];
+			var active = USC.checkConditionalPanel( panel, itemValue );
+			if ( active ) {
+				panel.classList.add( 'active' );
+			} else {
+				panel.classList.remove( 'active' );
+			}
+		}
+
+		// Trigger a resize for anything detecting position and state.
+		window.trigger( 'resize' );
+
+		// Return the activated conditionals and panels.
+		var detail = { name: name, input: input, panels: panels };
+		return detail;
+	}
+
+	/**
+	 * Get the value of the input triggering the conditional
+	 *
+	 * @param {HTMLElement} input
+	 * @returns {any}
+	 */
+	USC.getConditionalValue = function ( input ) {
+		return input.getValue();
+	};
+
+	/**
+	 * Get the conditional panels for this input
+	 *
+	 * @param {HTMLElement} input
+	 * @returns {any}
+	 */
+	USC.getConditionalPanels = function ( input ) {
+		var scope = input.closest( '.ui-conditionals' );
+		var name = input.getAttribute( 'data-name' );
+		if ( !scope ) {
+			console.warn( "Missing ui-conditionals scope.", input );
+			return;
+		} else if ( !name ) {
+			console.warn( "Missing data-name attribute for ui-conditionals.", input );
+			return;
+		}
+		var panels = scope.querySelectorAll( ".ui-conditional-panel[data-name='" + name + "']" );
+		return panels.length > 0 ? panels : null;
+	}
+
+
+	/**
+	 * Check to see if a conditional panel should be active or not
+	 *
+	 * @param {HTMLElement} panel
+	 * @param {string} itemValue
+	 */
+	USC.checkConditionalPanel = function ( panel, itemValue ) {
+		var value = panel.getAttribute( 'data-value' );
+		var notvalue = panel.getAttribute( 'data-notvalue' );
+		var hasvalue = panel.getAttribute( 'data-hasvalue' );
+
+		var active;
+		if ( hasvalue !== null ) {
+			if ( !itemValue ) {
+				return false;
+			}
+			itemValue = itemValue.split( ',' );
+			active = itemValue && itemValue.indexOf( hasvalue ) > -1;
+		} else if ( notvalue !== null ) {
+			active = !USC.matching( itemValue, notvalue );
+		} else if ( value !== null ) {
+			active = USC.matching( itemValue, value );
+		}
+		return active;
+	}
+
+	/**
+	 * Compare two values to see if they match.
+	 * 
+	 * @param {string} itemValue
+	 * @param {string} compareTo
+	 */
+	USC.matching = function ( itemValue, compareTo ) {
+		if ( compareTo === '*' ) {
+			// Any value at all is a match.
+			return !!itemValue;
+		} else if ( itemValue === '*' ) {
+			// If the item value is an asterisk, always assume a match.
+			return true;
+		} else if ( !compareTo ) {
+			// If the compare is empty, then a match is when the "value" is also empty.
+			return !itemValue;
+		} else if ( compareTo.charAt( 0 ) === '[' && compareTo.charAt( compareTo.length - 1 ) === ']' ) {
+			// We're dealing with an array of values.
+			compareTo = parseJson( compareTo );
+			for ( var i = 0; i < compareTo.length; i++ ) {
+				if ( compareTo[i] == itemValue ) return true;
+			}
+			// Return false if we didn't find a match.
+			return false;
+		} else {
+			return ( compareTo == itemValue );
+		}
+	}
+
+	if ( window.register ) {
+		window.register( 'usc/p/behaviors' );
+	}
+
+} )();
