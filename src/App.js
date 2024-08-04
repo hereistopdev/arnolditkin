@@ -1,10 +1,33 @@
 import logo from "./logo.svg";
 import "./App.css";
 
+import { Helmet } from "react-helmet";
+import YourComponent from "./test";
+
 function App() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "LegalService",
+    name: "Arnold & Itkin",
+    description: "Personal Injury Attorney",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "6009 Memorial Drive",
+      addressLocality: "Houston",
+      addressRegion: "TX",
+      postalCode: "77007",
+    },
+    image: "/images/logo-dark.2307211517203.png",
+    telephone: "(888) 493-1629",
+    url: "https://www.arnolditkin.com",
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "29.7610788",
+      longitude: "-95.4229852",
+    },
+  };
   return (
-    <div className="App">
-      {" "}
+    <div className="App" id="home">
       <div id="AccessibilityZone">
         <nav
           class="accessibility-menu ui-repeater"
@@ -915,6 +938,7 @@ function App() {
             ></video>
           </div>
         </section>
+        <YourComponent />
         <form
           id="Form_Results_FeedV1"
           method="post"
@@ -929,20 +953,22 @@ function App() {
             universal_="true"
             data-onvisible="anm"
           >
-            <figure class="ai_clip fit rel">
-              <svg style={{ width: 0, height: 0 }}>
-                <defs>
-                  <clippath id="AIclip" clipPathUnits="objectBoundingBox">
-                    <path
-                      transform="scale(0.00067,0.00115)"
-                      d="M1422.2,128.1L1492,0h-445.1l69.7,128.1V556l171,308.5H1492l-69.8-128.1V128.1z M735.2,0H425.6l55,99.3
+            <svg style={{ width: 0, height: 0 }}>
+              <defs>
+                <clippath id="AIclip" clipPathUnits="objectBoundingBox">
+                  <path
+                    transform="scale(0.00067,0.00115)"
+                    d="M1422.2,128.1L1492,0h-445.1l69.7,128.1V556l171,308.5H1492l-69.8-128.1V128.1z M735.2,0H425.6l55,99.3
 					L115.2,758.8L0,864.6h315.5l-76.4-113.1l73.8-133.2h455.3l72.6,131l-77.9,115.3h451.5L735.2,0z M371.1,513.3l169.5-305.8L710,513.3
 					H371.1z"
-                    ></path>
-                  </clippath>
-                </defs>
-              </svg>
-
+                  ></path>
+                </clippath>
+              </defs>
+            </svg>
+            <figure
+              class="ai_clip fit rel"
+              style={{ clipPath: "url(#AIclip)" }}
+            >
               <video
                 playsinline=""
                 autoplay=""
@@ -3424,6 +3450,7 @@ function App() {
                 src="./assets_src/wya-callout-bg-2.2305231209560.jpg"
                 alt=""
                 role="presentation"
+                style={{ opacity: 0 }}
               />
             </picture>
           </figure>
@@ -3690,29 +3717,12 @@ function App() {
       </main>
       <footer id="FooterZone">
         <section id="Footer" class="footer dark-bg" universal_="true">
-          {/* <script type="application/ld+json">
-          {
-            "@context": "https://schema.org",
-            "@type": "LegalService",
-            "name": "Arnold & Itkin",
-            "description": "Personal Injury Attorney",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "6009 Memorial Drive, ",
-              "addressLocality": "Houston",
-              "addressRegion": "TX",
-              "postalCode": "77007"
-            },
-            "image": "/images/logo-dark.2307211517203.png",
-            "telePhone": "(888) 493-1629",
-            "url": "https://www.arnolditkin.com",
-            "geo": {
-              "@type": "GeoCoordinates",
-              "latitude": "29.7610788",
-              "longitude": "-95.4229852"
-            }
-          }
-        </script> */}
+          <Helmet>
+            <script type="application/ld+json">
+              {JSON.stringify(structuredData)}
+            </script>
+          </Helmet>
+
           <div class="nlf-middle h-gap top-foot text-center">
             <a href="https://www.arnolditkin.com/" class="foot-logo third">
               <img
