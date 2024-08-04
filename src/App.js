@@ -31,7 +31,7 @@ function App() {
     <div className="App" id="home">
       <div id="AccessibilityZone">
         <nav
-          class="accessibility-menu ui-repeater"
+          className="accessibility-menu ui-repeater"
           id="AccessibilityMenu"
           universal_="true"
           data-showhide="true"
@@ -39,7 +39,7 @@ function App() {
           data-action="panel"
         >
           <button
-            class="nlf-middle"
+            className="nlf-middle"
             title="Open/Close the accessibility options menu"
             tabindex="0"
             data-role="btn"
@@ -51,14 +51,14 @@ function App() {
           >
             <svg
               viewBox="0 0 36 36"
-              class="open"
+              className="open"
               data-use="/cms/svg/site/u1u1br5b8ke.36.2407091106543.svg#accessibility"
             >
               <path d="M17.979 0C20.182 0 21.957 1.775 21.957 3.978C21.957 6.18 20.182 7.955 17.979 7.955C15.777 7.955 14.002 6.18 14.002 3.978C14.002 1.844 15.777 0 17.979 0ZM14.002 34.721C13.647 35.503 12.937 35.928 12.154 35.928C11.872 35.928 11.585 35.856 11.302 35.714C10.237 35.218 9.81 34.011 10.309 32.946C10.309 32.946 14.216 23.998 14.926 20.733C15.209 19.596 15.353 16.545 15.422 15.125C15.422 14.628 15.139 14.201 14.712 14.06L5.909 11.503C4.771 11.148 4.133 9.941 4.488 8.876C4.843 7.811 6.051 7.315 7.116 7.598C7.116 7.598 15.139 10.155 17.979 10.155C20.819 10.155 28.986 7.528 28.986 7.528C30.051 7.245 31.258 7.883 31.543 8.948C31.826 10.013 31.188 11.22 30.123 11.505L21.388 14.132C20.961 14.273 20.606 14.7 20.678 15.197C20.75 16.617 20.892 19.671 21.175 20.805C21.885 24.072 25.79 33.018 25.79 33.018C26.287 34.083 25.79 35.29 24.797 35.786C24.515 35.928 24.228 36 23.945 36C23.163 36 22.384 35.573 22.098 34.793L17.979 26.2L14.002 34.721Z"></path>
             </svg>
             <svg
               viewBox="0 0 36 36"
-              class="close"
+              className="close"
               data-use="/cms/svg/site/u1u1br5b8ke.36.2407091106543.svg#hide"
             >
               <path d="M21.074 17.999L34.815 4.256C35.087 4.054 35.311 3.794 35.473 3.498C35.635 3.2 35.731 2.872 35.757 2.532C35.779 2.196 35.731 1.856 35.613 1.536C35.495 1.22 35.307 0.932 35.067 0.692C34.831 0.454 34.541 0.268 34.223 0.148C33.905 0.03 33.567-0.02 33.227 0.008C32.891 0.03 32.561 0.124 32.263 0.288C31.967 0.452 31.707 0.674 31.503 0.946L17.764 14.687L4.021 0.946C3.565 0.604 3.001 0.436 2.433 0.48C1.865 0.52 1.333 0.764 0.929 1.166C0.529 1.568 0.285 2.102 0.245 2.67C0.201 3.238 0.369 3.802 0.709 4.256L14.452 17.999L0.709 31.74C0.369 32.198 0.201 32.758 0.245 33.326C0.285 33.894 0.529 34.43 0.929 34.83C1.333 35.234 1.865 35.478 2.433 35.52C3.001 35.558 3.565 35.392 4.021 35.05L17.764 21.311L31.503 35.05C31.707 35.322 31.967 35.546 32.263 35.71C32.561 35.872 32.891 35.966 33.227 35.994C33.567 36.018 33.905 35.966 34.223 35.85C34.541 35.73 34.831 35.542 35.067 35.306C35.307 35.066 35.495 34.778 35.613 34.46C35.731 34.142 35.779 33.802 35.757 33.464C35.731 33.126 35.635 32.798 35.473 32.498C35.311 32.204 35.087 31.942 34.815 31.74L21.074 17.999Z"></path>
@@ -72,10 +72,10 @@ function App() {
           >
             <ul>
               <li>
-                <button class="nlf-middle" data-action="content">
+                <button className="nlf-middle" data-action="content">
                   <svg
                     viewBox="0 0 36 36"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.36.2407091106543.svg#content"
                   >
                     <path d="M2.25 4.5H33.75C34.346 4.5 34.92 4.736 35.341 5.159C35.764 5.58 36 6.154 36 6.75C36 7.346 35.764 7.92 35.341 8.341C34.92 8.764 34.346 9 33.75 9H2.25C1.654 9 1.08 8.764 0.659 8.341C0.236 7.92 0 7.346 0 6.75C0 6.154 0.236 5.58 0.659 5.159C1.08 4.736 1.654 4.5 2.25 4.5ZM0 18C0 18.596 0.236 19.17 0.659 19.591C1.08 20.014 1.654 20.25 2.25 20.25H29.25C29.846 20.25 30.42 20.014 30.841 19.591C31.264 19.17 31.5 18.596 31.5 18C31.5 17.404 31.264 16.83 30.841 16.409C30.42 15.986 29.846 15.75 29.25 15.75H2.25C1.654 15.75 1.08 15.986 0.659 16.409C0.236 16.83 0 17.404 0 18ZM0 29.25C0 29.846 0.236 30.42 0.659 30.841C1.08 31.264 1.654 31.5 2.25 31.5H24.75C25.346 31.5 25.92 31.264 26.341 30.841C26.764 30.42 27 29.846 27 29.25C27 28.654 26.764 28.08 26.341 27.659C25.92 27.236 25.346 27 24.75 27H2.25C1.654 27 1.08 27.236 0.659 27.659C0.236 28.08 0 28.654 0 29.25Z"></path>
@@ -84,10 +84,10 @@ function App() {
                 </button>
               </li>
               <li>
-                <button class="nlf-middle" data-action="largeText">
+                <button className="nlf-middle" data-action="largeText">
                   <svg
                     viewBox="0 0 36 36"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.36.2407091106543.svg#text_size"
                   >
                     <path d="M24.75 9C24.154 9 23.58 8.764 23.159 8.341C22.736 7.92 22.5 7.346 22.5 6.75H15.75V29.25C16.346 29.25 16.92 29.486 17.341 29.909C17.764 30.33 18 30.904 18 31.5C18 32.096 17.764 32.67 17.341 33.091C16.92 33.514 16.346 33.75 15.75 33.75H11.25C10.654 33.75 10.08 33.514 9.659 33.091C9.236 32.67 9 32.096 9 31.5C9 30.904 9.236 30.33 9.659 29.909C10.08 29.486 10.654 29.25 11.25 29.25V6.75H4.5C4.5 7.346 4.264 7.92 3.841 8.341C3.42 8.764 2.846 9 2.25 9C1.654 9 1.08 8.764 0.659 8.341C0.236 7.92 0 7.346 0 6.75V4.5C0 3.904 0.236 3.33 0.659 2.909C1.08 2.486 1.654 2.25 2.25 2.25H24.75C25.346 2.25 25.92 2.486 26.341 2.909C26.764 3.33 27 3.904 27 4.5V6.75C27 7.346 26.764 7.92 26.341 8.341C25.92 8.764 25.346 9 24.75 9ZM36 18V15.75C36 15.154 35.764 14.58 35.341 14.159C34.92 13.736 34.346 13.5 33.75 13.5H20.25C19.654 13.5 19.08 13.736 18.659 14.159C18.236 14.58 18 15.154 18 15.75V18C18 18.596 18.236 19.17 18.659 19.591C19.08 20.014 19.654 20.25 20.25 20.25C20.846 20.25 21.42 20.014 21.841 19.591C22.264 19.17 22.5 18.596 22.5 18H24.75V29.25C24.154 29.25 23.58 29.486 23.159 29.909C22.736 30.33 22.5 30.904 22.5 31.5C22.5 32.096 22.736 32.67 23.159 33.091C23.58 33.514 24.154 33.75 24.75 33.75H29.25C29.846 33.75 30.42 33.514 30.841 33.091C31.264 32.67 31.5 32.096 31.5 31.5C31.5 30.904 31.264 30.33 30.841 29.909C30.42 29.486 29.846 29.25 29.25 29.25V18H31.5C31.5 18.596 31.736 19.17 32.159 19.591C32.58 20.014 33.154 20.25 33.75 20.25C34.346 20.25 34.92 20.014 35.341 19.591C35.764 19.17 36 18.596 36 18Z"></path>
@@ -96,10 +96,10 @@ function App() {
                 </button>
               </li>
               <li>
-                <button class="nlf-middle" data-action="clear">
+                <button className="nlf-middle" data-action="clear">
                   <svg
                     viewBox="0 0 36 36"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.36.2407091106543.svg#reset"
                   >
                     <path d="M4.887 15.425C4.46 17.994 4.824 20.634 5.933 22.992C6.239 23.62 6.588 24.225 6.98 24.805L7.486 25.411L8.924 23.97C9.227 23.687 9.628 23.527 10.044 23.527C10.458 23.527 10.858 23.687 11.162 23.97C11.403 24.202 11.558 24.508 11.603 24.839V30.885C11.657 31.301 11.547 31.722 11.297 32.059C11.048 32.399 10.676 32.626 10.264 32.698C10.102 32.732 9.936 32.732 9.774 32.698H3.645C3.443 32.671 3.249 32.604 3.076 32.5C2.9 32.397 2.747 32.26 2.626 32.097C2.504 31.935 2.416 31.749 2.367 31.553C2.318 31.355 2.306 31.15 2.338 30.95C2.39 30.619 2.549 30.313 2.794 30.084L4.136 28.745L3.645 28.156C3.119 27.478 2.644 26.763 2.223 26.013C0.812 23.518 0.047 20.71 0 17.844C0.014 14.147 1.174 10.547 3.323 7.539C5.472 4.533 8.503 2.267 11.997 1.059C14.533 0.127 17.255-0.186 19.94 0.143C20.264 0.17 20.576 0.267 20.86 0.426C21.141 0.588 21.386 0.809 21.573 1.074C21.762 1.354 21.89 1.671 21.949 2.001C22.007 2.334 21.996 2.676 21.917 3.003C21.769 3.529 21.436 3.984 20.979 4.283C20.522 4.582 19.973 4.708 19.433 4.638C17.354 4.404 15.253 4.679 13.304 5.437C11.158 6.236 9.257 7.575 7.783 9.323C6.307 11.074 5.31 13.175 4.887 15.425ZM33.815 9.802C33.394 9.053 32.92 8.337 32.393 7.66L31.869 7.089L33.242 5.732C33.48 5.498 33.64 5.194 33.701 4.866C33.73 4.665 33.721 4.463 33.669 4.267C33.62 4.071 33.532 3.887 33.41 3.725C33.289 3.563 33.136 3.428 32.96 3.327C32.787 3.225 32.594 3.16 32.393 3.133H26.28C26.118 3.108 25.952 3.108 25.789 3.133C25.382 3.21 25.02 3.437 24.772 3.772C24.527 4.105 24.417 4.519 24.467 4.931V10.995C24.511 11.326 24.667 11.631 24.908 11.861C25.211 12.147 25.612 12.304 26.028 12.304C26.442 12.304 26.842 12.147 27.146 11.861L28.649 10.358L29.108 10.995C29.525 11.564 29.885 12.171 30.186 12.808C31.003 14.453 31.455 16.253 31.509 18.089C31.536 20.978 30.62 23.8 28.901 26.122C27.182 28.446 24.754 30.147 21.982 30.966C20.248 31.524 18.41 31.686 16.605 31.44C16.072 31.368 15.529 31.494 15.084 31.796C14.636 32.097 14.317 32.552 14.186 33.074C14.105 33.389 14.09 33.718 14.144 34.039C14.198 34.361 14.317 34.667 14.497 34.937C14.668 35.187 14.893 35.398 15.151 35.556C15.41 35.713 15.698 35.814 16 35.853C16.715 35.938 17.438 35.981 18.158 35.983C20.149 35.988 22.126 35.632 23.992 34.937C26.433 34.147 28.67 32.826 30.537 31.067C32.404 29.31 33.863 27.159 34.799 24.769C35.737 22.382 36.133 19.815 35.96 17.254C35.788 14.696 35.048 12.205 33.797 9.964L33.815 9.802Z"></path>
@@ -122,16 +122,16 @@ function App() {
           <input type="hidden" name="_m_" value="Header" />
           <section
             id="Header"
-            class="masthead nlf-middle-between dark-bg"
+            className="masthead nlf-middle-between dark-bg"
             universal_="true"
             data-header="true"
             data-showhide="true"
             data-class-name="menu-open"
-            data-html-class="true"
+            data-html-className="true"
             data-formdefer="true"
           >
             <a
-              class="top-logo fit"
+              className="top-logo fit"
               aria-label="Home"
               title="Home"
               href="https://www.arnolditkin.com/"
@@ -144,22 +144,22 @@ function App() {
             </a>
 
             <nav
-              class="top-nav auto el-tab-box"
+              className="top-nav auto el-tab-box"
               id="TopNav"
               data-role="panel"
               data-closing="true"
             >
-              <ul class="nlf-center block-1200" role="menu">
-                <li class="nlf-wrap-middle rel" role="menuitem">
+              <ul className="nlf-center block-1200" role="menu">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a href="https://www.arnolditkin.com/about-us/" target="">
                     About Us
                   </a>
 
-                  <span class="el-tab nlf-middle-center stretch-self rel"></span>
+                  <span className="el-tab nlf-middle-center stretch-self rel"></span>
 
-                  <div class="el-panel">
-                    <ul class="ui-scroll" role="menu">
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                  <div className="el-panel">
+                    <ul className="ui-scroll" role="menu">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/about-us/careers/"
                           target=""
@@ -167,7 +167,7 @@ function App() {
                           Careers
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/about-us/co-counsel-opportunities/"
                           target=""
@@ -175,7 +175,7 @@ function App() {
                           Co-Counsel Opportunities
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/about-us/community-involvement/"
                           target=""
@@ -183,7 +183,7 @@ function App() {
                           Community Involvement
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/about-us/our-clients-stories/"
                           target=""
@@ -191,7 +191,7 @@ function App() {
                           Our Clients' Stories
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/about-us/fee-arrangements/"
                           target=""
@@ -199,7 +199,7 @@ function App() {
                           Fee Arrangements
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/awards-honors/"
                           target=""
@@ -207,7 +207,7 @@ function App() {
                           Awards &amp; Honors
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/our-victories/"
                           target=""
@@ -215,7 +215,7 @@ function App() {
                           Our Results
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/in-the-news/"
                           target=""
@@ -223,17 +223,17 @@ function App() {
                           In the News
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a href="https://www.arnolditkin.com/blog/" target="">
                           Personal Injury Blog
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a href="https://www.arnolditkin.com/news/" target="">
                           News &amp; Updates
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/video-center/"
                           target=""
@@ -244,7 +244,7 @@ function App() {
                     </ul>
                   </div>
                 </li>
-                <li class="nlf-wrap-middle rel" role="menuitem">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a
                     href="https://www.arnolditkin.com/meet-our-attorneys/"
                     target=""
@@ -252,11 +252,11 @@ function App() {
                     Meet Our Attorneys
                   </a>
 
-                  <span class="el-tab nlf-middle-center stretch-self rel"></span>
+                  <span className="el-tab nlf-middle-center stretch-self rel"></span>
 
-                  <div class="el-panel">
-                    <ul class="ui-scroll" role="menu">
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                  <div className="el-panel">
+                    <ul className="ui-scroll" role="menu">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/kurt-arnold/"
                           target=""
@@ -264,7 +264,7 @@ function App() {
                           Kurt Arnold
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/jason-itkin/"
                           target=""
@@ -272,7 +272,7 @@ function App() {
                           Jason Itkin
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/victoria-alford/"
                           target=""
@@ -280,7 +280,7 @@ function App() {
                           Victoria Alford
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/cory-itkin/"
                           target=""
@@ -288,7 +288,7 @@ function App() {
                           Cory Itkin
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/noah-wexler/"
                           target=""
@@ -296,7 +296,7 @@ function App() {
                           Noah Wexler
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/kyle-findley/"
                           target=""
@@ -304,7 +304,7 @@ function App() {
                           Kyle Findley
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/caj-boatright/"
                           target=""
@@ -312,7 +312,7 @@ function App() {
                           Caj Boatright
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/tara-arnold/"
                           target=""
@@ -320,7 +320,7 @@ function App() {
                           Tara Arnold
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/adam-lewis/"
                           target=""
@@ -328,7 +328,7 @@ function App() {
                           Adam Lewis
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/kala-sellers/"
                           target=""
@@ -336,7 +336,7 @@ function App() {
                           Kala Sellers
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/roland-christensen/"
                           target=""
@@ -344,7 +344,7 @@ function App() {
                           Roland Christensen
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/claire-schindler/"
                           target=""
@@ -352,7 +352,7 @@ function App() {
                           Claire Schindler
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/roy-buckmaster/"
                           target=""
@@ -360,7 +360,7 @@ function App() {
                           Roy Buckmaster
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/brittany-clark/"
                           target=""
@@ -368,7 +368,7 @@ function App() {
                           Brittany Clark
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/trent-shelton/"
                           target=""
@@ -376,7 +376,7 @@ function App() {
                           Trent Shelton
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/andrew-gould/"
                           target=""
@@ -384,7 +384,7 @@ function App() {
                           Andrew Gould
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/john-grinnan/"
                           target=""
@@ -392,7 +392,7 @@ function App() {
                           John Grinnan
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/trevor-courtney/"
                           target=""
@@ -400,7 +400,7 @@ function App() {
                           Trevor Courtney
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/brian-christensen/"
                           target=""
@@ -408,7 +408,7 @@ function App() {
                           Brian Christensen
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/ali-poulson/"
                           target=""
@@ -416,7 +416,7 @@ function App() {
                           Ali Poulson
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/alec-paradowski/"
                           target=""
@@ -424,7 +424,7 @@ function App() {
                           Alec Paradowski
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/katelin-gines/"
                           target=""
@@ -432,7 +432,7 @@ function App() {
                           Katelin Gines
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/samuel-long/"
                           target=""
@@ -440,7 +440,7 @@ function App() {
                           Samuel Long
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/daniel-moreno/"
                           target=""
@@ -448,7 +448,7 @@ function App() {
                           Daniel Moreno
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/andrew-bowman/"
                           target=""
@@ -456,7 +456,7 @@ function App() {
                           Andrew Bowman
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/james-long/"
                           target=""
@@ -464,7 +464,7 @@ function App() {
                           James Long
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/parker-cragg/"
                           target=""
@@ -472,7 +472,7 @@ function App() {
                           Parker Cragg
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/meet-our-attorneys/jamie-ford/"
                           target=""
@@ -483,7 +483,7 @@ function App() {
                     </ul>
                   </div>
                 </li>
-                <li class="nlf-wrap-middle rel" role="menuitem">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a
                     href="https://www.arnolditkin.com/practice-areas/"
                     target=""
@@ -491,11 +491,11 @@ function App() {
                     Practice Areas
                   </a>
 
-                  <span class="el-tab nlf-middle-center stretch-self rel"></span>
+                  <span className="el-tab nlf-middle-center stretch-self rel"></span>
 
-                  <div class="el-panel">
-                    <ul class="ui-scroll" role="menu">
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                  <div className="el-panel">
+                    <ul className="ui-scroll" role="menu">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/personal-injury/"
                           target=""
@@ -503,7 +503,7 @@ function App() {
                           Personal Injury
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/offshore-injuries/"
                           target=""
@@ -511,7 +511,7 @@ function App() {
                           Offshore Injuries
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/plant-refinery-accidents/"
                           target=""
@@ -519,7 +519,7 @@ function App() {
                           Plant &amp; Refinery Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/oil-rig-explosions/"
                           target=""
@@ -527,7 +527,7 @@ function App() {
                           Oil Rig Explosions
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/industrial-injury/"
                           target=""
@@ -535,7 +535,7 @@ function App() {
                           Industrial Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/oilfield-accidents/"
                           target=""
@@ -543,7 +543,7 @@ function App() {
                           Oilfield Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/houston-truck-accident-lawyer/"
                           target=""
@@ -551,7 +551,7 @@ function App() {
                           Truck Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/catastrophic-injuries/"
                           target=""
@@ -559,7 +559,7 @@ function App() {
                           Serious Injuries
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/medical-pharmaceutical-injury/"
                           target=""
@@ -567,7 +567,7 @@ function App() {
                           Medical &amp; Drug Injuries
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/motor-vehicle-accidents/"
                           target=""
@@ -575,7 +575,7 @@ function App() {
                           Vehicle Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/property-contamination/"
                           target=""
@@ -583,7 +583,7 @@ function App() {
                           Property Contamination
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/product-liability/"
                           target=""
@@ -591,7 +591,7 @@ function App() {
                           Defective Products
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/railroad-accidents/"
                           target=""
@@ -599,7 +599,7 @@ function App() {
                           Railroad Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/aviation-accidents/"
                           target=""
@@ -607,7 +607,7 @@ function App() {
                           Aviation Accidents
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/insurance-claims/"
                           target=""
@@ -618,7 +618,7 @@ function App() {
                     </ul>
                   </div>
                 </li>
-                <li class="nlf-wrap-middle rel" role="menuitem">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a
                     href="https://www.arnolditkin.com/our-victories/"
                     target=""
@@ -626,7 +626,7 @@ function App() {
                     Our Victories
                   </a>
                 </li>
-                <li class="nlf-wrap-middle rel" role="menuitem">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a
                     href="https://www.arnolditkin.com/video-center/client-testimonials/"
                     target=""
@@ -634,7 +634,7 @@ function App() {
                     Testimonials
                   </a>
                 </li>
-                <li class="nlf-wrap-middle rel" role="menuitem">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a
                     href="https://www.arnolditkin.com/common-questions/"
                     target=""
@@ -642,11 +642,11 @@ function App() {
                     Common Questions
                   </a>
 
-                  <span class="el-tab nlf-middle-center stretch-self rel"></span>
+                  <span className="el-tab nlf-middle-center stretch-self rel"></span>
 
-                  <div class="el-panel">
-                    <ul class="ui-scroll" role="menu">
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                  <div className="el-panel">
+                    <ul className="ui-scroll" role="menu">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/personal-injury-faqs/"
                           target=""
@@ -654,7 +654,7 @@ function App() {
                           Personal Injury FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/maritime-offshore-injury-faqs/"
                           target=""
@@ -662,7 +662,7 @@ function App() {
                           Maritime / Offshore Injury FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/trucking-injury-faqs/"
                           target=""
@@ -670,7 +670,7 @@ function App() {
                           Trucking Injury FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/medical-pharmaceutical-injury-faqs/"
                           target=""
@@ -678,7 +678,7 @@ function App() {
                           Medical / Pharmaceutical Injury FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/industrial-injury-faqs/"
                           target=""
@@ -686,7 +686,7 @@ function App() {
                           Industrial Injury FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/commercial-litigation-faqs/"
                           target=""
@@ -694,7 +694,7 @@ function App() {
                           Commercial Litigation FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/insurance-claims-faqs/"
                           target=""
@@ -702,7 +702,7 @@ function App() {
                           Insurance Claims FAQs
                         </a>
                       </li>
-                      <li class="nlf-wrap-middle rel" role="menuitem">
+                      <li className="nlf-wrap-middle rel" role="menuitem">
                         <a
                           href="https://www.arnolditkin.com/common-questions/property-contamination-faqs/"
                           target=""
@@ -713,30 +713,30 @@ function App() {
                     </ul>
                   </div>
                 </li>
-                <li class="nlf-wrap-middle rel" role="menuitem">
+                <li className="nlf-wrap-middle rel" role="menuitem">
                   <a href="https://abogado.arnolditkin.com/" target="_blank">
                     Español
                   </a>
                 </li>
-                <li class="nlf-wrap-middle rel show-1200" role="menuitem">
+                <li className="nlf-wrap-middle rel show-1200" role="menuitem">
                   <a href="https://www.arnolditkin.com/contact-us/">
                     Contact Us
                   </a>
                 </li>
               </ul>
               <div
-                class="mobile-search nlf-middle fit show-1200 ui-repeater"
+                className="mobile-search nlf-middle fit show-1200 ui-repeater"
                 id="TopNav_FTR0_ctl00"
               >
-                <div class="input-text" data-item="i" data-key="">
-                  <label for="TopNav_FTR0_ctl00_ITM0_C" class="ninja">
+                <div className="input-text" data-item="i" data-key="">
+                  <label for="TopNav_FTR0_ctl00_ITM0_C" className="ninja">
                     Search
                   </label>
                   <input
                     type="search"
                     placeholder="Search"
                     id="TopNav_FTR0_ctl00_ITM0_C"
-                    class="ui-cms-input"
+                    className="ui-cms-input"
                     name="TopNav$FTR0$ctl00$ITM0$C"
                     value=""
                   />
@@ -760,12 +760,12 @@ function App() {
               </div>
               <a
                 href="https://www.arnolditkin.com/schedule-online/"
-                class="btn nlf-inline-middle-center show-1200"
+                className="btn nlf-inline-middle-center show-1200"
               >
                 <svg
                   viewBox="0 0 24 24"
                   role="presentation"
-                  class="fit"
+                  className="fit"
                   data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#calendar"
                 >
                   <path
@@ -778,20 +778,20 @@ function App() {
                 Book Appointment
               </a>
             </nav>
-            <div class="contact-info fit">
-              <strong class="blk">100% Free Consultation</strong>
+            <div className="contact-info fit">
+              <strong className="blk">100% Free Consultation</strong>
               <a href="tel:(888) 493-1629" id="Header_1">
                 (888) 493-1629
               </a>
             </div>
             <a
               href="https://www.arnolditkin.com/contact-us/"
-              class="btn hide-800"
+              className="btn hide-800"
             >
               Contact Us
             </a>
             <button
-              class="menu-btn rlt show-1200"
+              className="menu-btn rlt show-1200"
               aria-label="Toggle Primary Navigation Menu"
               aria-controls="MobileMenu"
               aria-haspopup="true"
@@ -802,9 +802,9 @@ function App() {
               <span></span>
               <span></span>
             </button>
-            <a class="anchor" name="SiteTop"></a>
+            <a className="anchor" name="SiteTop"></a>
             <a
-              class="btn back-to-btn animate-to"
+              className="btn back-to-btn animate-to"
               title="Back To Top"
               href="https://www.arnolditkin.com/#SiteTop"
               tab-index="0"
@@ -826,13 +826,13 @@ function App() {
       <main id="MainZone">
         <section
           id="Mainstage_V1"
-          class="mainstage v1 text-center dark-bg bg-image ui-repeater anm"
+          className="mainstage v1 text-center dark-bg bg-image ui-repeater anm"
           universal_="true"
           data-onvisible="anm"
           data-showhide="true"
           data-class-name="open"
         >
-          <figure class="bg">
+          <figure className="bg">
             <video
               playsinline=""
               autoplay=""
@@ -842,19 +842,19 @@ function App() {
               data-replace="false"
             ></video>
           </figure>
-          <div class="main">
+          <div className="main">
             <header>
-              <small class="blk">
-                <span class="blk">
+              <small className="blk">
+                <span className="blk">
                   The Nation's Leading Personal Injury Lawyers
                 </span>
               </small>
-              <em class="blk">
-                <span class="nlf-middle-end">Over</span>
-                <strong class="blk">
-                  <b class="blk">$20 Billion</b>
+              <em className="blk">
+                <span className="nlf-middle-end">Over</span>
+                <strong className="blk">
+                  <b className="blk">$20 Billion</b>
                 </strong>
-                <span class="nlf-middle">Won</span>
+                <span className="nlf-middle">Won</span>
               </em>
               <h2>
                 Choose the Firm That Wins.
@@ -862,15 +862,15 @@ function App() {
                   No Matter What<sub>TM</sub>
                 </strong>
               </h2>
-              <ul class="nlf-center-wrap gap-sm">
+              <ul className="nlf-center-wrap gap-sm">
                 <li>
                   <a
                     href="https://www.arnolditkin.com/schedule-online/"
-                    class="btn"
+                    className="btn"
                   >
                     <svg
                       viewBox="0 0 24 24"
-                      class="fit"
+                      className="fit"
                       role="presentation"
                       data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#calendar"
                     >
@@ -887,13 +887,13 @@ function App() {
                 <li data-item="i" data-key="157228">
                   <a
                     href="javascript:void(0);"
-                    class="btn"
+                    className="btn"
                     title="Play Video"
                     data-role="btn"
                   >
                     <svg
                       viewBox="0 0 24 24"
-                      class="fit"
+                      className="fit"
                       role="presentation"
                       data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#play"
                     >
@@ -919,7 +919,12 @@ function App() {
               </ul>
             </header>
           </div>
-          <div class="popup" data-role="panel" data-item="si" data-key="157228">
+          <div
+            className="popup"
+            data-role="panel"
+            data-item="si"
+            data-key="157228"
+          >
             <svg
               viewBox="0 0 16 16"
               aria-label="Close Popup"
@@ -935,7 +940,7 @@ function App() {
               src="blob:https://www.arnolditkin.com/9585c3de-6071-4816-b3b7-86d925e366a7"
               data-replace="false"
               poster="https://d2a92m131axhse.cloudfront.net/cms/thumbnails/34/820x475/images/video-thumbnails/video-center.2307051724163.jpg"
-              class=""
+              className=""
             ></video>
           </div>
         </section>
@@ -950,7 +955,7 @@ function App() {
           <input type="hidden" name="_m_" value="Results_FeedV1" />
           <section
             id="Results_FeedV1"
-            class="results v1 dark-bg anm"
+            className="results v1 dark-bg anm"
             universal_="true"
             data-onvisible="anm"
           >
@@ -967,7 +972,7 @@ function App() {
               </defs>
             </svg>
             <figure
-              class="ai_clip fit rel"
+              className="ai_clip fit rel"
               style={{ clipPath: "url(#AIclip)" }}
             >
               <video
@@ -981,24 +986,24 @@ function App() {
             </figure>
             <input
               type="hidden"
-              class="ui-cms-input"
+              className="ui-cms-input"
               id="ctl00__edit_"
               name="ctl00$_edit_"
               value=""
             />
             <input
               type="hidden"
-              class="ui-cms-input"
+              className="ui-cms-input"
               id="ctl00__command_"
               name="ctl00$_command_"
               value=""
             />
-            <div class="ui-repeater ui-ajax active" id="ctl00">
+            <div className="ui-repeater ui-ajax active" id="ctl00">
               <input
                 type="hidden"
                 id="ctl00_HDR0_ResultsPerPage"
                 autocomplete="off"
-                class="ui-cms-input"
+                className="ui-cms-input"
                 name="ctl00$HDR0$ResultsPerPage"
                 value="4"
                 data-search="true"
@@ -1007,14 +1012,14 @@ function App() {
                 type="hidden"
                 id="ctl00_HDR0_PagingID"
                 autocomplete="off"
-                class="ui-cms-input"
+                className="ui-cms-input"
                 name="ctl00$HDR0$PagingID"
                 value=""
                 data-search="true"
               />
-              <ul class="h_gap rel">
+              <ul className="h_gap rel">
                 <li data-item="i" data-key="757">
-                  <small class="nlf-middle">
+                  <small className="nlf-middle">
                     <svg
                       viewBox="0 0 24 24"
                       role="presentation"
@@ -1030,17 +1035,17 @@ function App() {
                     </svg>
                     Record-Setting
                   </small>
-                  <strong class="blk">
+                  <strong className="blk">
                     $8
                     <b>Billion</b>
                   </strong>
 
-                  <h3 class="nlf-top">
+                  <h3 className="nlf-top">
                     Top 3 Largest Jury Verdict in U.S. History
                   </h3>
                 </li>
                 <li data-item="i" data-key="1125">
-                  <small class="nlf-middle">
+                  <small className="nlf-middle">
                     <svg
                       viewBox="0 0 24 24"
                       role="presentation"
@@ -1056,17 +1061,17 @@ function App() {
                     </svg>
                     Record-Setting
                   </small>
-                  <strong class="blk">
+                  <strong className="blk">
                     $2.25
                     <b>Billion</b>
                   </strong>
 
-                  <h3 class="nlf-top">
+                  <h3 className="nlf-top">
                     Record-Setting Victory for Roundup Cancer Victim
                   </h3>
                 </li>
                 <li data-item="i" data-key="1023">
-                  <small class="nlf-middle">
+                  <small className="nlf-middle">
                     <svg
                       viewBox="0 0 24 24"
                       role="presentation"
@@ -1082,17 +1087,17 @@ function App() {
                     </svg>
                     Record-Setting
                   </small>
-                  <strong class="blk">
+                  <strong className="blk">
                     $860
                     <b>Million</b>
                   </strong>
 
-                  <h3 class="nlf-top">
+                  <h3 className="nlf-top">
                     History-Making Verdict After Fatal Crane Accident
                   </h3>
                 </li>
                 <li data-item="i" data-key="1025">
-                  <small class="nlf-middle">
+                  <small className="nlf-middle">
                     <svg
                       viewBox="0 0 24 24"
                       role="presentation"
@@ -1108,18 +1113,18 @@ function App() {
                     </svg>
                     Record-Setting
                   </small>
-                  <strong class="blk">
+                  <strong className="blk">
                     $557
                     <b>Million</b>
                   </strong>
 
-                  <h3 class="nlf-top">
+                  <h3 className="nlf-top">
                     Massive Verdict Won Against Union Pacific
                   </h3>
                 </li>
               </ul>
 
-              <div class="scroll-nav nlf-middle-end">
+              <div className="scroll-nav nlf-middle-end">
                 <a href="javascript:void(&#39;Prev&#39;)" disabled="">
                   <svg
                     viewBox="0 0 16 16"
@@ -1142,7 +1147,7 @@ function App() {
               <div>
                 <a
                   href="https://www.arnolditkin.com/our-victories/"
-                  class="btn"
+                  className="btn"
                 >
                   See All Our Victories
                 </a>
@@ -1152,7 +1157,7 @@ function App() {
         </form>
         <section
           id="SplitContent_V1"
-          class="split-content v1 dark-bg anm"
+          className="split-content v1 dark-bg anm"
           data-onvisible="anm"
           data-showhide="true"
           data-class-name="open"
@@ -1164,39 +1169,39 @@ function App() {
               <strong>Personal Injury Lawyers</strong>
             </h1>
           </header>
-          <div class="main nlf-top gap block-1000">
-            <figure class="half rel ui-repeater" id="ctl04">
+          <div className="main nlf-top gap block-1000">
+            <figure className="half rel ui-repeater" id="ctl04">
               <picture
-                class="nlf"
+                className="nlf"
                 data-role="picture"
                 data-item="nr"
                 data-key=""
               >
                 <img
-                  class="full rel"
+                  className="full rel"
                   src="./assets_src/kurt-jason-img.2306211023131.jpg"
                   alt=""
                   role="presentation"
                   loading="lazy"
                 />
               </picture>
-              <div class="ui-repeater" id="ctl04_FTR01_ctl00">
-                <figcaption class="full" data-item="i" data-key="157228">
+              <div className="ui-repeater" id="ctl04_FTR01_ctl00">
+                <figcaption className="full" data-item="i" data-key="157228">
                   <div id="SplitContent_V1VideoTitle">
-                    <span class="blk">
+                    <span className="blk">
                       The Very Best Results for Your Personal Injury Case
                     </span>
                   </div>
                   <a
                     href="javascript:void(0);"
-                    class="btn"
+                    className="btn"
                     title="Play Video"
                     data-role="btn"
                   >
                     <svg
                       viewBox="0 0 24 24"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#play"
                     >
                       <path
@@ -1219,7 +1224,7 @@ function App() {
                   </a>
                 </figcaption>
                 <div
-                  class="popup"
+                  className="popup"
                   data-role="panel"
                   data-item="si"
                   data-key="157228"
@@ -1244,14 +1249,14 @@ function App() {
               </div>
             </figure>
             <article
-              class="half ui-repeater"
+              className="half ui-repeater"
               id="SplitContent_V1Expand"
               data-showhide="true"
               data-slider="true"
               data-class-name="xpnded"
             >
               <div
-                class="content"
+                className="content"
                 id="SplitContent_V1_Content"
                 data-content="true"
                 data-item="i"
@@ -1293,7 +1298,7 @@ function App() {
                 </p>
               </div>
               <div
-                class="content xpnd"
+                className="content xpnd"
                 id="SplitContent_V1_ExpandingContent"
                 aria-hidden="true"
                 data-role="panel"
@@ -1317,7 +1322,7 @@ function App() {
                   top Houston personal injury lawyers consistently wins historic
                   victories for our clients.&nbsp;
                 </p>
-                <p class="text-highlight t2">
+                <p className="text-highlight t2">
                   When clients are like family, you help them by winning.&nbsp;
                 </p>
                 <h2>
@@ -1371,7 +1376,7 @@ function App() {
                 </p>
               </div>
               <a
-                class="btn rd-mr -middle"
+                className="btn rd-mr -middle"
                 tabindex="0"
                 data-role="btn"
                 data-item="i"
@@ -1379,7 +1384,7 @@ function App() {
               >
                 <svg
                   viewBox="0 0 16 16"
-                  class="opn"
+                  className="opn"
                   aria-label="more"
                   title="More"
                   data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
@@ -1388,7 +1393,7 @@ function App() {
                 </svg>
                 <svg
                   viewBox="0 0 16 16"
-                  class="cls"
+                  className="cls"
                   aria-label="close"
                   title="Close"
                   data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#up"
@@ -1398,24 +1403,24 @@ function App() {
                     d="M-0.3-12.202C-0.108-12.01 0-11.749 0-11.477C0-11.205-0.108-10.944-0.3-10.751L-7.266-3.781C-7.458-3.589-7.719-3.48-7.991-3.48C-8.263-3.48-8.524-3.589-8.716-3.781L-15.681-10.751C-15.882-10.942-15.997-11.206-16-11.482C-16.003-11.759-15.895-12.025-15.699-12.22C-15.503-12.416-15.237-12.524-14.961-12.52C-14.684-12.516-14.421-12.401-14.23-12.2L-7.991-5.955L-1.751-12.2C-1.559-12.393-1.299-12.502-1.026-12.502C-0.754-12.503-0.493-12.395-0.3-12.202L-0.3-12.202Z"
                   ></path>
                 </svg>
-                <span class="opn">Continue Reading</span>
-                <span class="cls">Read Less</span>
+                <span className="opn">Continue Reading</span>
+                <span className="cls">Read Less</span>
               </a>
               <div
-                class="content expand-co"
+                className="content expand-co"
                 id="SplitContent_V1_ContentCO"
                 data-item="i"
                 data-key="1"
               >
-                <p class="text-highlight t4">
+                <p className="text-highlight t4">
                   When we represent our clients, we’re all in. We fight hard for
                   them. <strong>No Matter What.™</strong>
                 </p>
               </div>
               <div id="SplitContent_V1_Button" data-item="i" data-key="1">
-                <div class="btn-con">
+                <div className="btn-con">
                   <a
-                    class="btn"
+                    className="btn"
                     href="https://www.arnolditkin.com/practice-areas/"
                   >
                     Cases We Handle
@@ -1427,20 +1432,20 @@ function App() {
         </section>
         <section
           id="Founders_Feed"
-          class="founders dark-bg block-1000 ui-repeater anm"
+          className="founders dark-bg block-1000 ui-repeater anm"
           universal_="true"
           data-onvisible="anm"
         >
-          <header class="three-fifths">
+          <header className="three-fifths">
             <h2>
               <span>Our Founding</span>
               <strong>Partners</strong>
             </h2>
           </header>
-          <ul class="main nlf-top-wrap-reverse gap">
-            <li class="half" data-item="i" data-key="5912">
-              <div class="rel">
-                <picture class="bg">
+          <ul className="main nlf-top-wrap-reverse gap">
+            <li className="half" data-item="i" data-key="5912">
+              <div className="rel">
+                <picture className="bg">
                   <source
                     media="(max-width: 550px)"
                     srcset="
@@ -1465,28 +1470,28 @@ function App() {
                     loading="lazy"
                   />
                 </picture>
-                <div class="rel">
-                  <small class="blk">Founding Partner</small>
+                <div className="rel">
+                  <small className="blk">Founding Partner</small>
 
-                  <strong class="blk">Kurt Arnold</strong>
+                  <strong className="blk">Kurt Arnold</strong>
                   <a
                     href="https://www.arnolditkin.com/meet-our-attorneys/kurt-arnold/"
-                    class="btn"
+                    className="btn"
                   >
                     Meet Kurt
                   </a>
                 </div>
               </div>
 
-              <blockquote class="hide-800">
+              <blockquote className="hide-800">
                 “We take the cases we must win because it’s the right thing—the
                 ones we have to win.
                 <strong>Even if it’s hard. Especially if it’s hard.</strong>”
               </blockquote>
             </li>
-            <li class="half" data-item="i" data-key="5910">
-              <div class="rel">
-                <picture class="bg">
+            <li className="half" data-item="i" data-key="5910">
+              <div className="rel">
+                <picture className="bg">
                   <source
                     media="(max-width: 550px)"
                     srcset="
@@ -1511,20 +1516,20 @@ function App() {
                     loading="lazy"
                   />
                 </picture>
-                <div class="rel">
-                  <small class="blk">Founding Partner</small>
+                <div className="rel">
+                  <small className="blk">Founding Partner</small>
 
-                  <strong class="blk">Jason Itkin</strong>
+                  <strong className="blk">Jason Itkin</strong>
                   <a
                     href="https://www.arnolditkin.com/meet-our-attorneys/jason-itkin/"
-                    class="btn"
+                    className="btn"
                   >
                     Meet Jason
                   </a>
                 </div>
               </div>
 
-              <blockquote class="hide-800">
+              <blockquote className="hide-800">
                 “People call me when something terrible has happened and they
                 need help.
                 <strong>
@@ -1537,7 +1542,7 @@ function App() {
         </section>
         <section
           id="MeetTeam"
-          class="meet-team dark-bg anm"
+          className="meet-team dark-bg anm"
           universal_="true"
           data-onvisible="anm"
         >
@@ -1546,7 +1551,7 @@ function App() {
               <span>Meet the</span>
               <strong>Arnold &amp; Itkin Team</strong>
             </h2>
-            <div class="main">
+            <div className="main">
               <p>
                 <strong>Our attorneys will never be outworked.</strong>
                 When our Houston personal injury lawyers represent a client,
@@ -1560,13 +1565,13 @@ function App() {
 
               <a
                 href="https://www.arnolditkin.com/meet-our-attorneys/"
-                class="btn"
+                className="btn"
               >
                 Meet the Team
               </a>
             </div>
           </header>
-          <picture class="rel" data-role="picture">
+          <picture className="rel" data-role="picture">
             <source
               media="(max-width: 550px)"
               srcset="
@@ -1580,7 +1585,7 @@ function App() {
             "
             />
             <img
-              class="full"
+              className="full"
               src="./assets_src/team-img.2305162207263.jpg"
               alt=""
               role="presentation"
@@ -1589,7 +1594,7 @@ function App() {
         </section>
         <section
           id="Reviews_FeedV1"
-          class="reviews v1 nlf-end dark-bg block-1000 el-tab-box ui-repeater anm start active"
+          className="reviews v1 nlf-end dark-bg block-1000 el-tab-box ui-repeater anm start active"
           universal_="true"
           data-role="scroller"
           data-siblings="false"
@@ -1597,7 +1602,7 @@ function App() {
           data-video="true"
           data-onvisible="anm"
         >
-          <div class="two-thirds">
+          <div className="two-thirds">
             <header>
               <h2>
                 <span>Hear Our</span>
@@ -1607,12 +1612,12 @@ function App() {
             <div data-role="container">
               <ul data-role="list" role="tablist" style={{ transform: "none" }}>
                 <li
-                  class="nlf-top full s-active"
+                  className="nlf-top full s-active"
                   data-role="item"
                   data-item="i"
                   data-key="103855"
                 >
-                  <picture class="stretch-self auto rel">
+                  <picture className="stretch-self auto rel">
                     <source
                       media="(max-width: 550px)"
                       srcset="
@@ -1632,7 +1637,7 @@ function App() {
                       role="presentation"
                     />
                   </picture>
-                  <blockquote class="fit full rel">
+                  <blockquote className="fit full rel">
                     “I told him,
                     <strong>
                       “Kurt you’re my hero. You’re my knight in shining armor.”
@@ -1641,14 +1646,14 @@ function App() {
                     me, and I feel so safe. They are driven. They are
                     aggressive. They will not quit for you. They will not give
                     up for you. That’s what makes them special.”
-                    <div class="nlf-middle">
+                    <div className="nlf-middle">
                       <address>
                         Mildred Solar Cortes
                         <small>El Faro Widow</small>
                       </address>
                       <a
                         href="javascript:void(0);"
-                        class="btn el-tab"
+                        className="btn el-tab"
                         title="Watch Video"
                         role="tab"
                         tabindex="0"
@@ -1660,7 +1665,7 @@ function App() {
                         <svg
                           viewBox="0 0 24 24"
                           role="presentation"
-                          class="fit"
+                          className="fit"
                           data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#play"
                         >
                           <path
@@ -1685,12 +1690,12 @@ function App() {
                   </blockquote>
                 </li>
                 <li
-                  class="nlf-top full"
+                  className="nlf-top full"
                   data-role="item"
                   data-item="i"
                   data-key="112692"
                 >
-                  <picture class="stretch-self auto rel">
+                  <picture className="stretch-self auto rel">
                     <source
                       media="(max-width: 550px)"
                       srcset="
@@ -1710,20 +1715,20 @@ function App() {
                       role="presentation"
                     />
                   </picture>
-                  <blockquote class="fit full rel">
+                  <blockquote className="fit full rel">
                     “They’re unstoppable! They definitely have the experience
                     you need. They're fighting for these little people that
                     can’t handle themselves when a giant comes.
                     <strong>Almost like the David and Goliath.</strong> It’s an
                     amazing thing to see.”
-                    <div class="nlf-middle">
+                    <div className="nlf-middle">
                       <address>
                         Shawn Thomas
                         <small>Workplace Explosion Victim</small>
                       </address>
                       <a
                         href="javascript:void(0);"
-                        class="btn el-tab"
+                        className="btn el-tab"
                         title="Watch Video"
                         role="tab"
                         tabindex="0"
@@ -1735,7 +1740,7 @@ function App() {
                         <svg
                           viewBox="0 0 24 24"
                           role="presentation"
-                          class="fit"
+                          className="fit"
                           data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#play"
                         >
                           <path
@@ -1760,12 +1765,12 @@ function App() {
                   </blockquote>
                 </li>
                 <li
-                  class="nlf-top full"
+                  className="nlf-top full"
                   data-role="item"
                   data-item="i"
                   data-key="97405"
                 >
-                  <picture class="stretch-self auto rel">
+                  <picture className="stretch-self auto rel">
                     <source
                       media="(max-width: 550px)"
                       srcset="
@@ -1788,7 +1793,7 @@ function App() {
                       data-src="https://d2a92m131axhse.cloudfront.net/cms/thumbnails/34/680x947/images/video-thumbnails/terry-yount.2307051724115.jpg"
                     />
                   </picture>
-                  <blockquote class="fit full rel">
+                  <blockquote className="fit full rel">
                     “I really feel like Arnold &amp; Itkin brought justice to my
                     family. Not only my family but many other families.
                     <strong>
@@ -1798,14 +1803,14 @@ function App() {
                     working ‘til way after midnight. There were a couple nights
                     they never even slept. It was just amazing to me and my
                     family.”
-                    <div class="nlf-middle">
+                    <div className="nlf-middle">
                       <address>
                         Terry Yount
                         <small>Father of Drug Injury Victim</small>
                       </address>
                       <a
                         href="javascript:void(0);"
-                        class="btn el-tab"
+                        className="btn el-tab"
                         title="Watch Video"
                         role="tab"
                         tabindex="0"
@@ -1817,7 +1822,7 @@ function App() {
                         <svg
                           viewBox="0 0 24 24"
                           role="presentation"
-                          class="fit"
+                          className="fit"
                           data-use="/cms/svg/site/u1u1br5b8ke.24.2407091106502.svg#play"
                         >
                           <path
@@ -1842,7 +1847,7 @@ function App() {
                   </blockquote>
                 </li>
               </ul>
-              <div class="scroll-nav nlf-middle-end" data-role="arrows">
+              <div className="scroll-nav nlf-middle-end" data-role="arrows">
                 <button
                   title="View previous item"
                   aria-label="View previous item"
@@ -1873,13 +1878,13 @@ function App() {
             </div>
             <a
               href="https://www.arnolditkin.com/video-center/client-testimonials/"
-              class="btn"
+              className="btn"
             >
               Our Testimonials
             </a>
           </div>
           <div
-            class="popup el-panel"
+            className="popup el-panel"
             data-item="si"
             data-key="103855"
             tabindex="0"
@@ -1889,7 +1894,7 @@ function App() {
           >
             <svg
               viewBox="0 0 16 16"
-              class="el-sec-tab"
+              className="el-sec-tab"
               aria-label="Close Popup"
               data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#close"
               role="tab"
@@ -1911,7 +1916,7 @@ function App() {
             ></video>
           </div>
           <div
-            class="popup el-panel"
+            className="popup el-panel"
             data-item="si"
             data-key="112692"
             tabindex="0"
@@ -1921,7 +1926,7 @@ function App() {
           >
             <svg
               viewBox="0 0 16 16"
-              class="el-sec-tab"
+              className="el-sec-tab"
               aria-label="Close Popup"
               data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#close"
               role="tab"
@@ -1943,7 +1948,7 @@ function App() {
             ></video>
           </div>
           <div
-            class="popup el-panel"
+            className="popup el-panel"
             data-item="si"
             data-key="97405"
             tabindex="0"
@@ -1953,7 +1958,7 @@ function App() {
           >
             <svg
               viewBox="0 0 16 16"
-              class="el-sec-tab"
+              className="el-sec-tab"
               aria-label="Close Popup"
               data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#close"
               role="tab"
@@ -1977,11 +1982,11 @@ function App() {
         </section>
         <section
           id="Awards_Media"
-          class="awards-media dark-bg"
+          className="awards-media dark-bg"
           universal_="true"
         >
-          <div class="nlf-middle-reverse anm" data-onvisible="anm">
-            <figure class="ai_clip fit rel">
+          <div className="nlf-middle-reverse anm" data-onvisible="anm">
+            <figure className="ai_clip fit rel">
               <svg style={{ width: 0, height: 0 }}>
                 <defs>
                   <clippath id="AIclip" clipPathUnits="objectBoundingBox">
@@ -1994,16 +1999,16 @@ function App() {
                   </clippath>
                 </defs>
               </svg>
-              <picture class="bg">
+              <picture className="bg">
                 <img
-                  class="full"
+                  className="full"
                   src="./assets_src/wya-callout-bg.2305162205243.jpg"
                   alt=""
                   role="presentation"
                 />
               </picture>
             </figure>
-            <header class="auto">
+            <header className="auto">
               <h2>
                 <span>No Matter</span>
                 <strong>Who You Ask</strong>
@@ -2018,153 +2023,156 @@ function App() {
               </p>
             </header>
           </div>
-          <div class="awards text-center anm" data-onvisible="anm">
-            <span class="blk">Awards &amp; Honors</span>
-            <ul class="nlf-wrap">
+          <div className="awards text-center anm" data-onvisible="anm">
+            <span className="blk">Awards &amp; Honors</span>
+            <ul className="nlf-wrap">
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-law-firm-23.2305080910016.png"
                   alt="Best Lawyers - Best Law Firms 2023"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-law-firm-22.2305080910015.png"
                   alt="Best Lawyers - Best Law Firms 2022"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-law-firm-21.2305080910018.png"
                   alt="Best Lawyers - Best Law Firms 2021"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-law-firm-20.2305080910014.png"
                   alt="Best Lawyers - Best Law Firms 2020"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-law-firm-19.2305080910014.png"
                   alt="Best Lawyers - Best Law Firms 2019"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-lawyers.2305080910012.jpg"
                   alt="Best Lawyers 2021"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/super-lawyers.2305080910013.png"
                   alt="SuperLawyers"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/lawdragon.2305080910013.jpg"
                   alt="LawDragon - 500 Leading Lawyers 2020"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/inner-circle.2305080910013.png"
                   alt="Inner Circle of Advocates"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/top-100.2305080910013.png"
                   alt="Top 100 Trial Lawyers"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/texas-lawyers.2305080910018.png"
                   alt="Texas Lawyer - Top Verdicts &amp; Settlements 2019"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
               <li
-                class="fourth auto nlf-middle-center anm"
+                className="fourth auto nlf-middle-center anm"
                 data-onvisible="anm"
               >
                 <img
                   src="./assets_src/best-lawyers.2305080910012.jpg"
                   alt="Best Lawyers in America"
                   loading="lazy"
-                  class=""
+                  className=""
                 />
               </li>
             </ul>
-            <a href="https://www.arnolditkin.com/awards-honors/" class="btn">
+            <a
+              href="https://www.arnolditkin.com/awards-honors/"
+              className="btn"
+            >
               Our Awards
             </a>
           </div>
           <div
-            class="media text-center ui-repeater anm"
+            className="media text-center ui-repeater anm"
             id="ctl00"
             data-role="scroller"
             data-onvisible="anm"
           >
-            <span class="blk">Media Mentions</span>
+            <span className="blk">Media Mentions</span>
             <div data-role="container">
               <ul data-role="list">
                 <li data-role="item" data-item="i" data-key="5">
@@ -2172,7 +2180,7 @@ function App() {
                     src="./assets_src/cnn.2010041729242.png"
                     alt="CNN"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="4">
@@ -2180,7 +2188,7 @@ function App() {
                     src="./assets_src/forbes.2010041729243.png"
                     alt="Forbes"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="7">
@@ -2188,7 +2196,7 @@ function App() {
                     src="./assets_src/abc.2305081004573.png"
                     alt="ABC"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="8">
@@ -2196,7 +2204,7 @@ function App() {
                     src="./assets_src/wsj.2305081004573.png"
                     alt="Wall Street Journal"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="590">
@@ -2204,7 +2212,7 @@ function App() {
                     src="./assets_src/cbs-logo.2305081004573.png"
                     alt="CBS"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="9">
@@ -2212,7 +2220,7 @@ function App() {
                     src="./assets_src/usa-today.2305081004573.png"
                     alt="USA Today"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="10">
@@ -2220,7 +2228,7 @@ function App() {
                     src="./assets_src/reuters.2305081008032.png"
                     alt="Reuters"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
                 <li data-role="item" data-item="i" data-key="13">
@@ -2228,50 +2236,53 @@ function App() {
                     src="./assets_src/nbc-news.2305081008032.png"
                     alt="NBC News"
                     loading="lazy"
-                    class=""
+                    className=""
                   />
                 </li>
               </ul>
               <div
-                class="thumb-nav nlf-middle-center"
+                className="thumb-nav nlf-middle-center"
                 data-role="thumbList"
               ></div>
             </div>
-            <a href="https://www.arnolditkin.com/in-the-news/" class="btn">
+            <a href="https://www.arnolditkin.com/in-the-news/" className="btn">
               Featured News
             </a>
           </div>
         </section>
         <section
           id="Practices_V1"
-          class="practices v1 dark-bg ui-repeater anm"
+          className="practices v1 dark-bg ui-repeater anm"
           universal_="true"
           data-onvisible="anm"
         >
-          <header class="nlf-top h_gap block-1000">
-            <h2 class="three-fifths">
+          <header className="nlf-top h_gap block-1000">
+            <h2 className="three-fifths">
               <span>Our Areas</span>
-              <strong class="blk fit">of Practice</strong>
+              <strong className="blk fit">of Practice</strong>
             </h2>
-            <div class="two-fifths">
+            <div className="two-fifths">
               <p>
                 Our legal team is honored to stand up for the rights of those
                 who have been severely injured, as well as their families.
               </p>
-              <a href="https://www.arnolditkin.com/practice-areas/" class="btn">
+              <a
+                href="https://www.arnolditkin.com/practice-areas/"
+                className="btn"
+              >
                 All Cases We Handle
               </a>
             </div>
           </header>
-          <nav class="nlf block-550">
+          <nav className="nlf block-550">
             <a
               href="https://www.arnolditkin.com/personal-injury/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16589"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2281,7 +2292,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/17223310-8da8-414a-95c7-1afb6cfa46a6"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2301,10 +2312,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Personal Injury</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Personal Injury</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Personal Injury</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Personal Injury</h3>
+                <div className="ui-scroll">
                   <p>
                     When people are hurt, they deserve the highest quality
                     medical care and the&nbsp;chance to move forward with their
@@ -2316,12 +2327,12 @@ function App() {
                     hurt.&nbsp;
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2331,12 +2342,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/offshore-injuries/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16594"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2346,7 +2357,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/e36599a0-87e5-4180-9fe7-721e063db69a"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2366,10 +2377,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Offshore Injuries</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Offshore Injuries</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Offshore Injuries</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Offshore Injuries</h3>
+                <div className="ui-scroll">
                   <p>
                     The offshore industry has long been regarded as one of the
                     most dangerous trades in the world.&nbsp;It’s been that way
@@ -2381,12 +2392,12 @@ function App() {
                     to move forward.
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2396,12 +2407,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/plant-refinery-accidents/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16591"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2411,7 +2422,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/f7f16109-786c-403c-a5c9-16f4336d7170"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2431,10 +2442,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Plant Accidents</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Plant Accidents</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Plant Accidents</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Plant Accidents</h3>
+                <div className="ui-scroll">
                   <p>
                     Plant and refinery workers are vital to American industry,
                     but&nbsp;fewer and fewer employers are willing to invest in
@@ -2447,12 +2458,12 @@ function App() {
                     the rest of their lives.&nbsp;
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2462,12 +2473,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/houston-truck-accident-lawyer/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16604"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2477,7 +2488,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/2ff93d58-79a8-43ff-b228-99f369bcbcba"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2497,10 +2508,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Truck Accidents</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Truck Accidents</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Truck Accidents</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Truck Accidents</h3>
+                <div className="ui-scroll">
                   <p>
                     Truck accidents are devastating. At tens of thousands of
                     pounds and speeds of 50 mph or more, commercial trucks
@@ -2513,12 +2524,12 @@ function App() {
                     while making the roads safer.
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2528,12 +2539,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/catastrophic-injuries/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16602"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2543,7 +2554,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/7c82c61c-44c7-4169-b2f9-4d6d706a7d9e"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2563,10 +2574,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Catastrophic Injuries</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Catastrophic Injuries</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Catastrophic Injuries</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Catastrophic Injuries</h3>
+                <div className="ui-scroll">
                   <p>
                     Catastrophic injuries aren't defined by pain,&nbsp;damage,
                     or even where the injury took place. They are defined by how
@@ -2579,12 +2590,12 @@ function App() {
                     by corporate negligence.
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2594,12 +2605,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/product-liability/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16590"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2609,7 +2620,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/4b69c472-dd58-4f5c-803a-2842b02324cc"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2629,10 +2640,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Product Liability</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Product Liability</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Product Liability</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Product Liability</h3>
+                <div className="ui-scroll">
                   <p>
                     Companies have a simple duty: make sure whatever they
                     produce is safe to use. However, in a mad rush to get to
@@ -2642,12 +2653,12 @@ function App() {
                     unsafe products, we step&nbsp;up to hold them accountable.
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2657,12 +2668,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/industrial-injury/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16592"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2672,7 +2683,7 @@ function App() {
                 src="blob:https://www.arnolditkin.com/002445db-cd15-4d58-a1f0-982d43e6a2a9"
                 data-replace="false"
               ></video>
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2692,10 +2703,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Industrial Injuries</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Industrial Injuries</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Industrial Injuries</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Industrial Injuries</h3>
+                <div className="ui-scroll">
                   <p>
                     For over 100 years, industrial work has been a dangerous way
                     for people to earn a living. Aging factories and poor safety
@@ -2708,12 +2719,12 @@ function App() {
                     company negligence, we make sure they're taken care of.
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2723,12 +2734,12 @@ function App() {
             </a>
             <a
               href="https://www.arnolditkin.com/medical-pharmaceutical-injury/"
-              class="auto rel nlf-top-column-between"
+              className="auto rel nlf-top-column-between"
               data-item="i"
               data-key="16599"
             >
               <video
-                class="bg hide-1440"
+                className="bg hide-1440"
                 type="video/mp4"
                 playsinline=""
                 loop=""
@@ -2739,7 +2750,7 @@ function App() {
                 data-replace="false"
               ></video>
 
-              <picture class="bg show-1440">
+              <picture className="bg show-1440">
                 <source
                   media="(max-width: 550px)"
                   srcset="
@@ -2759,10 +2770,10 @@ function App() {
                   loading="lazy"
                 />
               </picture>
-              <strong class="blk fit rel">Medical Injuries</strong>
-              <div class="content auto nlf-column-top-end rel hide-1000">
-                <h3 class="fit">Medical Injuries</h3>
-                <div class="ui-scroll">
+              <strong className="blk fit rel">Medical Injuries</strong>
+              <div className="content auto nlf-column-top-end rel hide-1000">
+                <h3 className="fit">Medical Injuries</h3>
+                <div className="ui-scroll">
                   <p>
                     Many law firms have taken Big Pharma to task for their
                     negligent manufacturing and marketing of vital medications.
@@ -2772,12 +2783,12 @@ function App() {
                     people call when they're facing industry giants.
                   </p>
                 </div>
-                <span class="simple-btn">
+                <span className="simple-btn">
                   Learn more
                   <svg
                     viewBox="0 0 16 16"
                     role="presentation"
-                    class="fit"
+                    className="fit"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#right"
                   >
                     <path d="M3.798 0.3C3.99 0.108 4.251 0 4.523 0C4.795 0 5.057 0.108 5.249 0.3L12.219 7.266C12.412 7.458 12.52 7.719 12.52 7.991C12.52 8.263 12.412 8.524 12.219 8.716L5.249 15.682C5.059 15.882 4.794 15.997 4.518 16C4.241 16.003 3.975 15.895 3.78 15.698C3.585 15.503 3.476 15.237 3.48 14.96C3.484 14.684 3.6 14.421 3.8 14.23L10.045 7.991L3.8 1.751C3.608 1.559 3.498 1.299 3.498 1.026C3.497 0.754 3.606 0.493 3.798 0.3L3.798 0.3Z"></path>
@@ -2789,13 +2800,13 @@ function App() {
         </section>
         <section
           id="FAQs_V1"
-          class="faqs v1 el-tab-box dark-bg ui-repeater anm"
+          className="faqs v1 el-tab-box dark-bg ui-repeater anm"
           universal_="true"
           data-closing="true"
           data-slider="true"
           data-onvisible="anm"
         >
-          <div class="thin">
+          <div className="thin">
             <header>
               <h2>
                 <span>Common</span>
@@ -2815,7 +2826,7 @@ function App() {
                 data-key="34555"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -2827,7 +2838,7 @@ function App() {
                   Do I Have a Personal Injury Lawsuit?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -2835,7 +2846,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -2875,7 +2886,7 @@ function App() {
                 data-key="34556"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -2887,7 +2898,7 @@ function App() {
                   What Are the Damages for Personal Injury in Texas?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -2895,7 +2906,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -2933,7 +2944,7 @@ function App() {
                 data-key="34557"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -2945,7 +2956,7 @@ function App() {
                   What Does Litigation Mean in a Personal Injury Lawsuit?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -2953,7 +2964,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -2990,7 +3001,7 @@ function App() {
                 data-key="18559"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -3002,7 +3013,7 @@ function App() {
                   What’s a Houston Personal Injury Attorney?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -3010,7 +3021,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -3041,7 +3052,7 @@ function App() {
                 data-key="18560"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -3053,7 +3064,7 @@ function App() {
                   What Kind of Cases Do Your Houston Injury Attorneys Handle?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -3061,7 +3072,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -3115,7 +3126,7 @@ function App() {
                 data-key="18561"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -3127,7 +3138,7 @@ function App() {
                   What If I Can’t Afford a Houston Personal Injury Lawyer?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -3135,7 +3146,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -3160,7 +3171,7 @@ function App() {
                 data-key="18562"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -3172,7 +3183,7 @@ function App() {
                   How Much Is My Houston Personal Injury Case Worth?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -3180,7 +3191,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -3210,7 +3221,7 @@ function App() {
                 data-key="18563"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -3222,7 +3233,7 @@ function App() {
                   Why Hire a Houston Personal Injury Lawyer Who Tries Cases?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -3230,7 +3241,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -3261,7 +3272,7 @@ function App() {
                 data-key="34558"
               >
                 <h3
-                  class="nlf-middle-between h_gap-sm el-tab rel"
+                  className="nlf-middle-between h_gap-sm el-tab rel"
                   itemprop="name"
                   role="tab"
                   tabindex="0"
@@ -3273,7 +3284,7 @@ function App() {
                   What Areas Do You Serve?
                   <svg
                     viewBox="0 0 16 16"
-                    class="fit"
+                    className="fit"
                     role="presentation"
                     data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#down"
                   >
@@ -3281,7 +3292,7 @@ function App() {
                   </svg>
                 </h3>
                 <div
-                  class="content el-panel"
+                  className="content el-panel"
                   itemscope=""
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
@@ -3404,42 +3415,42 @@ function App() {
           <input type="hidden" name="_m_" value="ContactForm" />
           <section
             id="ContactForm"
-            class="contact-form text-center dark-bg ui-repeater ui-contact-form ui-comms-api"
+            className="contact-form text-center dark-bg ui-repeater ui-contact-form ui-comms-api"
             universal_="true"
             data-redirect="/thank-you/"
           >
-            <a name="Contact" class="anchor" data-item="i" data-key=""></a>
-            <picture class="bg hide-550" data-role="picture">
+            <a name="Contact" className="anchor" data-item="i" data-key=""></a>
+            <picture className="bg hide-550" data-role="picture">
               <img
-                class="full"
+                className="full"
                 src="./assets_src/contact-bg.2305162206254.jpg"
                 alt=""
                 role="presentation"
               />
             </picture>
-            <div class="main" data-item="i" data-key="">
+            <div className="main" data-item="i" data-key="">
               <header>
-                <span class="blk">Contact Us</span>
+                <span className="blk">Contact Us</span>
                 <h2>Get Started with a Free Consultation</h2>
               </header>
-              <div class="nlf-top-reverse gap-sm block-550">
-                <fieldset class="auto">
-                  <ul class="nlf-top-wrap gap-sm block-550">
-                    <li class="half">
-                      <div class="input-text">
+              <div className="nlf-top-reverse gap-sm block-550">
+                <fieldset className="auto">
+                  <ul className="nlf-top-wrap gap-sm block-550">
+                    <li className="half">
+                      <div className="input-text">
                         <input
                           required="required"
                           type="text"
                           id="ContactForm_ITM0_FirstName"
-                          class="ui-cms-input"
+                          className="ui-cms-input"
                           name="ContactForm$ITM0$FirstName"
-                          value=""
+                          // value=""
                         />
                         <label for="ContactForm_ITM0_FirstName">
                           First Name
                         </label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_FirstName"
                           data-type="valueMissing"
                         >
@@ -3447,19 +3458,19 @@ function App() {
                         </div>
                       </div>
                     </li>
-                    <li class="half">
-                      <div class="input-text">
+                    <li className="half">
+                      <div className="input-text">
                         <input
                           required="required"
                           type="text"
                           id="ContactForm_ITM0_LastName"
-                          class="ui-cms-input"
+                          className="ui-cms-input"
                           name="ContactForm$ITM0$LastName"
                           value=""
                         />
                         <label for="ContactForm_ITM0_LastName">Last Name</label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_LastName"
                           data-type="valueMissing"
                         >
@@ -3467,26 +3478,26 @@ function App() {
                         </div>
                       </div>
                     </li>
-                    <li class="half">
-                      <div class="input-text">
+                    <li className="half">
+                      <div className="input-text">
                         <input
                           required="required"
                           type="email"
                           id="ContactForm_ITM0_EmailAddress"
-                          class="ui-cms-input"
+                          className="ui-cms-input"
                           name="ContactForm$ITM0$EmailAddress"
                           value=""
                         />
                         <label for="ContactForm_ITM0_EmailAddress">Email</label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_EmailAddress"
                           data-type="typeMismatch"
                         >
                           This isn't a valid email address.
                         </div>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_EmailAddress"
                           data-type="valueMissing"
                         >
@@ -3494,27 +3505,27 @@ function App() {
                         </div>
                       </div>
                     </li>
-                    <li class="half">
-                      <div class="input-text">
+                    <li className="half">
+                      <div className="input-text">
                         <input
                           id="ContactForm_ITM0_Phone"
                           type="tel"
                           pattern="[(]\d{3}[)][\s]\d{3}[\-]\d{4}"
-                          class="phone-mask ui-cms-input"
+                          className="phone-mask ui-cms-input"
                           required="required"
                           name="ContactForm$ITM0$Phone"
                           value=""
                         />
                         <label for="ContactForm_ITM0_Phone">Phone</label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_Phone"
                           data-type="typeMismatch"
                         >
                           This isn't a valid phone number.
                         </div>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_Phone"
                           data-type="valueMissing"
                         >
@@ -3522,8 +3533,8 @@ function App() {
                         </div>
                       </div>
                     </li>
-                    <li class="half">
-                      <div class="input-text">
+                    <li className="half">
+                      <div className="input-text">
                         <svg
                           viewBox="0 0 16 16"
                           role="presentation"
@@ -3534,10 +3545,10 @@ function App() {
                         <select
                           id="ContactForm_ITM0_LeadTypeID"
                           required="required"
-                          class="ui-cms-select ui-cms-input"
+                          className="ui-cms-select ui-cms-input"
                           name="ContactForm$ITM0$LeadTypeID"
                         >
-                          <option class=""></option>
+                          <option className=""></option>
                           <option value="1">
                             Yes, I am a potential new client.
                           </option>
@@ -3550,7 +3561,7 @@ function App() {
                           Are you a new client?
                         </label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_LeadTypeID"
                           data-type="valueMissing"
                         >
@@ -3558,8 +3569,8 @@ function App() {
                         </div>
                       </div>
                     </li>
-                    <li class="half">
-                      <div class="input-text">
+                    <li className="half">
+                      <div className="input-text">
                         <svg
                           viewBox="0 0 16 16"
                           role="presentation"
@@ -3570,10 +3581,10 @@ function App() {
                         <select
                           id="ContactForm_ITM0_Case_Type"
                           required="required"
-                          class="ui-cms-select ui-cms-input"
+                          className="ui-cms-select ui-cms-input"
                           name="ContactForm$ITM0$Case_Type"
                         >
-                          <option class=""></option>
+                          <option className=""></option>
                           <option value="5">Business Dispute</option>
                           <option value="6">Commercial / Truck Accident</option>
                           <option value="7">Cruise Line Injury</option>
@@ -3589,7 +3600,7 @@ function App() {
                           Case Type
                         </label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_Case_Type"
                           data-type="valueMissing"
                         >
@@ -3598,19 +3609,19 @@ function App() {
                       </div>
                     </li>
                     <li>
-                      <div class="input-text">
+                      <div className="input-text">
                         <textarea
                           type="text"
                           id="ContactForm_ITM0_Message"
                           required="required"
-                          class="ui-cms-input"
+                          className="ui-cms-input"
                           name="ContactForm$ITM0$Message"
                         ></textarea>
                         <label for="ContactForm_ITM0_Message">
                           Tell Us What Happened
                         </label>
                         <div
-                          class="validation"
+                          className="validation"
                           for="ContactForm_ITM0_Message"
                           data-type="valueMissing"
                         >
@@ -3623,18 +3634,18 @@ function App() {
                     id="ContactForm_ITM0_Form5"
                     value="false"
                     type="hidden"
-                    class="ui-cms-input"
+                    className="ui-cms-input"
                     name="ContactForm$ITM0$Form5"
                   />
                   <input
                     id="ContactForm_ITM0_FFD6"
                     type="hidden"
-                    class="ui-cms-input"
+                    className="ui-cms-input"
                     name="ContactForm$ITM0$FFD6"
                     value="1722677154039"
                   />
                   <button
-                    class="btn"
+                    className="btn"
                     type="submit"
                     id="ContactForm_ITM0_ctl11"
                     name="ContactForm$ITM0$ctl11"
@@ -3649,30 +3660,30 @@ function App() {
         </form>
       </main>
       <footer id="FooterZone">
-        <section id="Footer" class="footer dark-bg" universal_="true">
+        <section id="Footer" className="footer dark-bg" universal_="true">
           <Helmet>
             <script type="application/ld+json">
               {JSON.stringify(structuredData)}
             </script>
           </Helmet>
 
-          <div class="nlf-middle h-gap top-foot text-center">
-            <a href="https://www.arnolditkin.com/" class="foot-logo third">
+          <div className="nlf-middle h-gap top-foot text-center">
+            <a href="https://www.arnolditkin.com/" className="foot-logo third">
               <img
                 src="./assets_src/footer-logo.2303131351207.png"
                 alt="Arnold &amp; Itkin"
                 title="Arnold &amp; Itkin"
               />
             </a>
-            <div class="contact-info third nlf">
+            <div className="contact-info third nlf">
               <div>
-                <strong class="blk">100% Free Consultation</strong>
+                <strong className="blk">100% Free Consultation</strong>
                 <a href="tel:(888) 493-1629" id="Footer_1">
                   (888) 493-1629
                 </a>
               </div>
             </div>
-            <ul class="social nlf-wrap-end third ui-repeater" id="ctl00">
+            <ul className="social nlf-wrap-end third ui-repeater" id="ctl00">
               <li data-item="i" data-key="82402">
                 <a
                   href="https://www.facebook.com/arnolditkin"
@@ -3756,7 +3767,7 @@ function App() {
             </ul>
           </div>
           <nav>
-            <ul class="nlf-middle-center block-550">
+            <ul className="nlf-middle-center block-550">
               <li>
                 <a href="https://www.arnolditkin.com/">Home</a>
               </li>
@@ -3780,15 +3791,15 @@ function App() {
               </li>
             </ul>
           </nav>
-          <div class="locations ui-repeater" id="ctl02">
-            <strong class="blk text-center">Office Locations</strong>
-            <ul class="nlf-top gap-sm block-550">
+          <div className="locations ui-repeater" id="ctl02">
+            <strong className="blk text-center">Office Locations</strong>
+            <ul className="nlf-top gap-sm block-550">
               <li
-                class="half auto nlf-top block-550"
+                className="half auto nlf-top block-550"
                 data-item="i"
                 data-key="3795"
               >
-                <picture class="rel fit">
+                <picture className="rel fit">
                   <source
                     media="(max-width: 550px)"
                     srcset="
@@ -3796,7 +3807,7 @@ function App() {
                   "
                   />
                   <img
-                    class="full"
+                    className="full"
                     src="./assets_src/houston.2304191710398.jpg"
                     alt=""
                     loading="lazy"
@@ -3805,7 +3816,7 @@ function App() {
                 </picture>
 
                 <address
-                  class="rel auto"
+                  className="rel auto"
                   itemprop="address"
                   itemscope=""
                   itemtype="http://schema.org/PostalAddress"
@@ -3821,14 +3832,14 @@ function App() {
                   <br />
                   <a
                     href="https://www.google.com/maps?cid=14487635134600714720"
-                    class="simple-btn"
+                    className="simple-btn"
                     target="_blank"
                   >
                     Get Directions
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#direction"
                     >
                       <path d="M13.551 7.966L11.344 5.759C11.021 5.437 10.497 5.437 10.173 5.759C9.85 6.083 9.85 6.607 10.173 6.93L10.968 7.724H9.655C8.322 7.723 7.039 8.232 6.069 9.147V2.826L6.863 3.62C7.186 3.943 7.71 3.943 8.034 3.62C8.357 3.297 8.357 2.772 8.034 2.449L5.827 0.242C5.672 0.087 5.461 0 5.241 0C5.022 0 4.811 0.087 4.656 0.242L2.449 2.449C2.126 2.772 2.126 3.297 2.449 3.62C2.773 3.943 3.297 3.943 3.62 3.62L4.414 2.826V15.172C4.414 15.63 4.784 16 5.241 16C5.699 16 6.069 15.63 6.069 15.172V12.966C6.07 12.014 6.448 11.103 7.121 10.431C7.793 9.759 8.704 9.381 9.655 9.379H10.968L10.173 10.173C9.85 10.497 9.85 11.021 10.173 11.344C10.497 11.667 11.021 11.667 11.344 11.344L13.551 9.137C13.706 8.982 13.793 8.771 13.793 8.552C13.793 8.333 13.706 8.121 13.551 7.966Z"></path>
@@ -3837,11 +3848,11 @@ function App() {
                 </address>
               </li>
               <li
-                class="half auto nlf-top block-550"
+                className="half auto nlf-top block-550"
                 data-item="i"
                 data-key="3796"
               >
-                <picture class="rel fit">
+                <picture className="rel fit">
                   <source
                     media="(max-width: 550px)"
                     srcset="
@@ -3849,7 +3860,7 @@ function App() {
                   "
                   />
                   <img
-                    class="full"
+                    className="full"
                     src="./assets_src/louisiana.2304191710399.jpg"
                     alt=""
                     loading="lazy"
@@ -3858,7 +3869,7 @@ function App() {
                 </picture>
 
                 <address
-                  class="rel auto"
+                  className="rel auto"
                   itemprop="address"
                   itemscope=""
                   itemtype="http://schema.org/PostalAddress"
@@ -3874,14 +3885,14 @@ function App() {
                   <br />
                   <a
                     href="https://www.google.com/maps?cid=6374277213056684068"
-                    class="simple-btn"
+                    className="simple-btn"
                     target="_blank"
                   >
                     Get Directions
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#direction"
                     >
                       <path d="M13.551 7.966L11.344 5.759C11.021 5.437 10.497 5.437 10.173 5.759C9.85 6.083 9.85 6.607 10.173 6.93L10.968 7.724H9.655C8.322 7.723 7.039 8.232 6.069 9.147V2.826L6.863 3.62C7.186 3.943 7.71 3.943 8.034 3.62C8.357 3.297 8.357 2.772 8.034 2.449L5.827 0.242C5.672 0.087 5.461 0 5.241 0C5.022 0 4.811 0.087 4.656 0.242L2.449 2.449C2.126 2.772 2.126 3.297 2.449 3.62C2.773 3.943 3.297 3.943 3.62 3.62L4.414 2.826V15.172C4.414 15.63 4.784 16 5.241 16C5.699 16 6.069 15.63 6.069 15.172V12.966C6.07 12.014 6.448 11.103 7.121 10.431C7.793 9.759 8.704 9.381 9.655 9.379H10.968L10.173 10.173C9.85 10.497 9.85 11.021 10.173 11.344C10.497 11.667 11.021 11.667 11.344 11.344L13.551 9.137C13.706 8.982 13.793 8.771 13.793 8.552C13.793 8.333 13.706 8.121 13.551 7.966Z"></path>
@@ -3889,7 +3900,7 @@ function App() {
                   </a>
                   <br />
                   <a
-                    class="simple-btn"
+                    className="simple-btn"
                     href="https://www.arnolditkin.com/louisiana/"
                     target="_blank"
                   >
@@ -3897,7 +3908,7 @@ function App() {
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#site"
                     >
                       <path d="M9.777 1.777C9.286 1.777 8.889 1.38 8.889 0.889C8.889 0.398 9.286 0 9.777 0H15.11C15.346 0 15.573 0.093 15.74 0.26C15.906 0.426 16 0.653 16 0.889V6.222C16 6.713 15.601 7.11 15.11 7.11C14.62 7.11 14.222 6.713 14.222 6.222V3.034L5.961 11.294C5.614 11.642 5.052 11.642 4.705 11.294C4.357 10.948 4.357 10.385 4.705 10.038L12.965 1.777L9.777 1.777ZM0 3.556C0 2.573 0.796 1.777 1.777 1.777H6.222C6.713 1.777 7.11 2.176 7.11 2.666C7.11 3.157 6.713 3.556 6.222 3.556H1.777V14.222H12.444V9.777C12.444 9.286 12.842 8.889 13.333 8.889C13.824 8.889 14.222 9.286 14.222 9.777V14.222C14.222 15.204 13.426 16 12.444 16H1.777C0.796 16 0 15.204 0 14.222L0 3.556Z"></path>
@@ -3906,11 +3917,11 @@ function App() {
                 </address>
               </li>
               <li
-                class="half auto nlf-top block-550"
+                className="half auto nlf-top block-550"
                 data-item="i"
                 data-key="3797"
               >
-                <picture class="rel fit">
+                <picture className="rel fit">
                   <source
                     media="(max-width: 550px)"
                     srcset="
@@ -3918,7 +3929,7 @@ function App() {
                   "
                   />
                   <img
-                    class="full"
+                    className="full"
                     src="./assets_src/dallas.2304191710398.jpg"
                     alt=""
                     loading="lazy"
@@ -3927,7 +3938,7 @@ function App() {
                 </picture>
 
                 <address
-                  class="rel auto"
+                  className="rel auto"
                   itemprop="address"
                   itemscope=""
                   itemtype="http://schema.org/PostalAddress"
@@ -3943,14 +3954,14 @@ function App() {
                   <br />
                   <a
                     href="https://www.google.com/maps?cid=3000474872982418258"
-                    class="simple-btn"
+                    className="simple-btn"
                     target="_blank"
                   >
                     Get Directions
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#direction"
                     >
                       <path d="M13.551 7.966L11.344 5.759C11.021 5.437 10.497 5.437 10.173 5.759C9.85 6.083 9.85 6.607 10.173 6.93L10.968 7.724H9.655C8.322 7.723 7.039 8.232 6.069 9.147V2.826L6.863 3.62C7.186 3.943 7.71 3.943 8.034 3.62C8.357 3.297 8.357 2.772 8.034 2.449L5.827 0.242C5.672 0.087 5.461 0 5.241 0C5.022 0 4.811 0.087 4.656 0.242L2.449 2.449C2.126 2.772 2.126 3.297 2.449 3.62C2.773 3.943 3.297 3.943 3.62 3.62L4.414 2.826V15.172C4.414 15.63 4.784 16 5.241 16C5.699 16 6.069 15.63 6.069 15.172V12.966C6.07 12.014 6.448 11.103 7.121 10.431C7.793 9.759 8.704 9.381 9.655 9.379H10.968L10.173 10.173C9.85 10.497 9.85 11.021 10.173 11.344C10.497 11.667 11.021 11.667 11.344 11.344L13.551 9.137C13.706 8.982 13.793 8.771 13.793 8.552C13.793 8.333 13.706 8.121 13.551 7.966Z"></path>
@@ -3958,7 +3969,7 @@ function App() {
                   </a>
                   <br />
                   <a
-                    class="simple-btn"
+                    className="simple-btn"
                     href="https://www.arnolditkin.com/dallas-personal-injury/"
                     target="_blank"
                   >
@@ -3966,7 +3977,7 @@ function App() {
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#site"
                     >
                       <path d="M9.777 1.777C9.286 1.777 8.889 1.38 8.889 0.889C8.889 0.398 9.286 0 9.777 0H15.11C15.346 0 15.573 0.093 15.74 0.26C15.906 0.426 16 0.653 16 0.889V6.222C16 6.713 15.601 7.11 15.11 7.11C14.62 7.11 14.222 6.713 14.222 6.222V3.034L5.961 11.294C5.614 11.642 5.052 11.642 4.705 11.294C4.357 10.948 4.357 10.385 4.705 10.038L12.965 1.777L9.777 1.777ZM0 3.556C0 2.573 0.796 1.777 1.777 1.777H6.222C6.713 1.777 7.11 2.176 7.11 2.666C7.11 3.157 6.713 3.556 6.222 3.556H1.777V14.222H12.444V9.777C12.444 9.286 12.842 8.889 13.333 8.889C13.824 8.889 14.222 9.286 14.222 9.777V14.222C14.222 15.204 13.426 16 12.444 16H1.777C0.796 16 0 15.204 0 14.222L0 3.556Z"></path>
@@ -3975,11 +3986,11 @@ function App() {
                 </address>
               </li>
               <li
-                class="half auto nlf-top block-550"
+                className="half auto nlf-top block-550"
                 data-item="i"
                 data-key="24045"
               >
-                <picture class="rel fit">
+                <picture className="rel fit">
                   <source
                     media="(max-width: 550px)"
                     srcset="
@@ -3987,7 +3998,7 @@ function App() {
                   "
                   />
                   <img
-                    class="full"
+                    className="full"
                     src="./assets_src/midland.2306011442399.jpg"
                     alt=""
                     loading="lazy"
@@ -3996,7 +4007,7 @@ function App() {
                 </picture>
 
                 <address
-                  class="rel auto"
+                  className="rel auto"
                   itemprop="address"
                   itemscope=""
                   itemtype="http://schema.org/PostalAddress"
@@ -4014,14 +4025,14 @@ function App() {
                   <br />
                   <a
                     href="https://www.google.com/maps?cid=13082389897886898714"
-                    class="simple-btn"
+                    className="simple-btn"
                     target="_blank"
                   >
                     Get Directions
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#direction"
                     >
                       <path d="M13.551 7.966L11.344 5.759C11.021 5.437 10.497 5.437 10.173 5.759C9.85 6.083 9.85 6.607 10.173 6.93L10.968 7.724H9.655C8.322 7.723 7.039 8.232 6.069 9.147V2.826L6.863 3.62C7.186 3.943 7.71 3.943 8.034 3.62C8.357 3.297 8.357 2.772 8.034 2.449L5.827 0.242C5.672 0.087 5.461 0 5.241 0C5.022 0 4.811 0.087 4.656 0.242L2.449 2.449C2.126 2.772 2.126 3.297 2.449 3.62C2.773 3.943 3.297 3.943 3.62 3.62L4.414 2.826V15.172C4.414 15.63 4.784 16 5.241 16C5.699 16 6.069 15.63 6.069 15.172V12.966C6.07 12.014 6.448 11.103 7.121 10.431C7.793 9.759 8.704 9.381 9.655 9.379H10.968L10.173 10.173C9.85 10.497 9.85 11.021 10.173 11.344C10.497 11.667 11.021 11.667 11.344 11.344L13.551 9.137C13.706 8.982 13.793 8.771 13.793 8.552C13.793 8.333 13.706 8.121 13.551 7.966Z"></path>
@@ -4029,7 +4040,7 @@ function App() {
                   </a>
                   <br />
                   <a
-                    class="simple-btn"
+                    className="simple-btn"
                     href="https://www.arnolditkin.com/midland-personal-injury/"
                     target="_blank"
                   >
@@ -4037,23 +4048,23 @@ function App() {
                     <svg
                       viewBox="0 0 16 16"
                       role="presentation"
-                      class="fit"
+                      className="fit"
                       data-use="/cms/svg/site/u1u1br5b8ke.16.2407091106488.svg#site"
                     >
                       <path d="M9.777 1.777C9.286 1.777 8.889 1.38 8.889 0.889C8.889 0.398 9.286 0 9.777 0H15.11C15.346 0 15.573 0.093 15.74 0.26C15.906 0.426 16 0.653 16 0.889V6.222C16 6.713 15.601 7.11 15.11 7.11C14.62 7.11 14.222 6.713 14.222 6.222V3.034L5.961 11.294C5.614 11.642 5.052 11.642 4.705 11.294C4.357 10.948 4.357 10.385 4.705 10.038L12.965 1.777L9.777 1.777ZM0 3.556C0 2.573 0.796 1.777 1.777 1.777H6.222C6.713 1.777 7.11 2.176 7.11 2.666C7.11 3.157 6.713 3.556 6.222 3.556H1.777V14.222H12.444V9.777C12.444 9.286 12.842 8.889 13.333 8.889C13.824 8.889 14.222 9.286 14.222 9.777V14.222C14.222 15.204 13.426 16 12.444 16H1.777C0.796 16 0 15.204 0 14.222L0 3.556Z"></path>
                     </svg>
                   </a>
-                  <em class="blk">By Appointment Only</em>
+                  <em className="blk">By Appointment Only</em>
                 </address>
               </li>
             </ul>
           </div>
-          <div class="bot-foot">
-            <div class="nlf-top-between block-550">
-              <div class="nlf">
-                <span class="blk">© 2024 All Rights Reserved.</span>
+          <div className="bot-foot">
+            <div className="nlf-top-between block-550">
+              <div className="nlf">
+                <span className="blk">© 2024 All Rights Reserved.</span>
               </div>
-              <ul class="nlf">
+              <ul className="nlf">
                 <li>
                   <a href="https://www.arnolditkin.com/privacy-policy/">
                     Privacy Policy
@@ -4064,7 +4075,7 @@ function App() {
                 </li>
               </ul>
             </div>
-            <small class="blk">
+            <small className="blk">
               The information on this website is for general information
               purposes only. Nothing on this site should be taken as legal
               advice for any individual case or situation. This information is

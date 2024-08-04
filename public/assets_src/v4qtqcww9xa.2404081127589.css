@@ -1473,7 +1473,7 @@ aside .thumb-nav {
   display: none !important;
   visibility: hidden;
 }
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 2440px) {
   [class*="block-1440"] {
     display: block;
   }

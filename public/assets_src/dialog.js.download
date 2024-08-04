@@ -566,35 +566,35 @@ require2( ['usc/p/utils'], function () {
 	};
 
 	const dialogTemplate =
-'<div class="ui-widget-overlay"></div>'+
-'<div tabindex="-1" role="dialog" class="ui-dialog">'+
-'	<div class="ui-dialog-titlebar">'+
-'		<span class="ui-dialog-title"></span>'+
-'		<button type="button" class="ui-button ui-dialog-titlebar-close" title="Close Pop-up" data-action="Close">'+
-'			<span class="ui-button-icon ui-icon ui-icon-closethick"></span>'+
-'			<span class="ui-button-icon-space"> </span>'+
+'<div className="ui-widget-overlay"></div>'+
+'<div tabindex="-1" role="dialog" className="ui-dialog">'+
+'	<div className="ui-dialog-titlebar">'+
+'		<span className="ui-dialog-title"></span>'+
+'		<button type="button" className="ui-button ui-dialog-titlebar-close" title="Close Pop-up" data-action="Close">'+
+'			<span className="ui-button-icon ui-icon ui-icon-closethick"></span>'+
+'			<span className="ui-button-icon-space"> </span>'+
 '		</button>'+
 '	</div>'+
-'	<aside class="ui-dialog-content"></aside>'+
-'	<div class="ui-dialog-buttonpane">'+
-'		<div class="ui-dialog-buttonset"></div>'+
+'	<aside className="ui-dialog-content"></aside>'+
+'	<div className="ui-dialog-buttonpane">'+
+'		<div className="ui-dialog-buttonset"></div>'+
 '	</div>'+
 '</div>';
 
 	const dialogTemplateForm =
-'<div class="ui-widget-overlay"></div>'+
-'<div tabindex="-1" role="dialog" class="ui-dialog">'+
+'<div className="ui-widget-overlay"></div>'+
+'<div tabindex="-1" role="dialog" className="ui-dialog">'+
 '	<form action="javascript:void(0)">'+
-'		<div class="ui-dialog-titlebar">'+
-'			<span class="ui-dialog-title"></span>'+
-'			<button type="button" class="ui-button ui-dialog-titlebar-close" title="Close Pop-up" data-action="Close">'+
-'				<span class="ui-button-icon ui-icon ui-icon-closethick"></span>'+
-'				<span class="ui-button-icon-space"> </span>'+
+'		<div className="ui-dialog-titlebar">'+
+'			<span className="ui-dialog-title"></span>'+
+'			<button type="button" className="ui-button ui-dialog-titlebar-close" title="Close Pop-up" data-action="Close">'+
+'				<span className="ui-button-icon ui-icon ui-icon-closethick"></span>'+
+'				<span className="ui-button-icon-space"> </span>'+
 '			</button>'+
 '		</div>'+
-'		<aside class="ui-dialog-content"></aside>'+
-'		<div class="ui-dialog-buttonpane">'+
-'			<div class="ui-dialog-buttonset"></div>'+
+'		<aside className="ui-dialog-content"></aside>'+
+'		<div className="ui-dialog-buttonpane">'+
+'			<div className="ui-dialog-buttonset"></div>'+
 '		</div>'+
 '	</form>'+
 '</div>';

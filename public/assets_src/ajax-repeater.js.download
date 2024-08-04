@@ -231,7 +231,7 @@ require2( ['usc/p/utils', 'usc/p/http', 'usc/p/visible', 'usc/p/dialog'], functi
 		this.options.popup.returnTo = item;
 
 		// Open the popup now, in a loading state.
-		var dialog = USC.dialog( '<aside class="ui-loading"></aside>', this.options.popup );
+		var dialog = USC.dialog( '<aside className="ui-loading"></aside>', this.options.popup );
 
 		// Submit and process the results.
 		var that = this;
@@ -275,7 +275,7 @@ require2( ['usc/p/utils', 'usc/p/http', 'usc/p/visible', 'usc/p/dialog'], functi
 		this.options.popup.returnTo = item;
 
 		// Open the popup now, in a loading state.
-		var dialog = USC.dialog( '<aside class="ui-loading"></aside>', this.options.popup );
+		var dialog = USC.dialog( '<aside className="ui-loading"></aside>', this.options.popup );
 
 
 		// Submit and process the results.
