@@ -327,7 +327,6 @@ aside .dark-bg {
   opacity: 0.2;
 }
 .ai_clip {
-  clip-path: url(#AIclip);
   width: 78.4%;
   padding-bottom: 45.7%;
   background-color: rgb(var(--black));
@@ -3991,14 +3990,14 @@ html:not(.cms-content) [data-class-name="xpnded"]:has(.cnt-stl:empty) {
   top: 3.575%;
   width: 898.614vh;
   height: 92.85%;
-  left: 100%;
-  clip-path: url(#NMWclip);
+  /* left: 100%; */
+  /* clip-path: url(#NMWclip); */
   background-color: rgb(var(--black));
 }
 .nmw picture {
   position: fixed;
-  /* top: 0; */
-  /* left: 0; */
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 }
@@ -4010,9 +4009,16 @@ html:not(.cms-content) [data-class-name="xpnded"]:has(.cnt-stl:empty) {
 .nmw h2:first-child {
   font-weight: 700;
 }
+@keyframes NMWslide {
+  0% {
+    left: 100%;
+  }
+  100% {
+    left: -898.614vh;
+  }
+}
 .anm.nmw figure {
-  left: -898.614vh;
-  transition: left 20s linear;
+  animation: NMWslide 20s linear infinite;
 }
 .nmw[data-onvisible] header {
   opacity: 0;
